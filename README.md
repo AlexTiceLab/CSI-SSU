@@ -143,41 +143,6 @@ p10k-ssu-screen eukaryotic_samples.fasta taxonomy.txt --18s-only -o euk_ssu
 p10k-ssu-screen input.fasta taxonomy.txt --dry-run -v
 ```
 
-## Configuration
-
-The tool supports optional configuration files for advanced settings:
-
-### Config File Locations (searched in order)
-1. `~/.p10k_ssu_screening.yaml`
-2. `./p10k_config.yaml`
-3. `./.p10k_config.yaml`
-
-### Example Configuration
-```yaml
-threads: 8
-blast:
-  evalue: 1e-5
-  max_target_seqs: 10
-mafft:
-  algorithm: auto
-  maxiterate: 1000
-pplacer:
-  keep_at_most: 7
-```
-
-## Development
-
-### Running Tests
-```bash
-pip install -e ".[dev]"
-pytest tests/
-```
-
-### Code Style
-```bash
-black p10k_ssu_screening/
-flake8 p10k_ssu_screening/
-```
 
 ## Troubleshooting
 
@@ -194,30 +159,6 @@ flake8 p10k_ssu_screening/
 - **Verbose output**: Use `-v` flag for detailed execution information
 - **Dry run**: Use `--dry-run` to see what commands would be executed
 
-## Citation
-
-If you use this tool in your research, please cite:
-
-```
-P10K SSU Screening Tool
-Jones, R.E. (2024)
-GitHub: https://github.com/AlexTiceLab/P10K-SSU-screening-tool
-```
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Authors
-
-- **Robert E. Jones** - *Initial work* - [robert.ervin.jones@gmail.com](mailto:robert.ervin.jones@gmail.com)
-
-## Acknowledgments
-
-- P10K project team
-- Alex Tice Lab
-- Contributors to BLAST, MAFFT, pplacer, and Snakemake tools
