@@ -38,6 +38,7 @@ setup(
         'p10k_ssu_screening': [
             'workflows/*.smk',
             'data/reference_packages/**/*',
+            'data/queries/*',
         ],
     },
     include_package_data=True,
