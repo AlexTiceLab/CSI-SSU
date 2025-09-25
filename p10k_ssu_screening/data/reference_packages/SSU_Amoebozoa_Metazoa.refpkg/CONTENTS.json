@@ -1,0 +1,41 @@
+{
+    "metadata": {
+        "create_date": "2025-09-17 09:13:24",
+        "format_version": "1.1",
+        "locus": "16S"
+    },
+    "files": {
+        "aln_fasta": "SSU_Amoebozoa_Metazoa_mafft_gt03.fasta",
+        "tree": "SSU_Amoebozoa_Metazoa_mafft_gt03.fasta.treefile",
+        "tree_stats": "model_info.txt",
+        "phylo_model": "phylo_modelbwubl7p_.json"
+    },
+    "md5": {
+        "aln_fasta": "6107852c87c20efc6cb5423a90c05e29",
+        "tree": "13e90090c5d1076a4e96853c684d4880",
+        "tree_stats": "99981c447d1f9f3f55865f53566be2ca",
+        "phylo_model": "697c107f266ed2ad3b7c9d56d43dc9b1"
+    },
+    "log": [
+        "Updates files: tree_stats=/lustre/work/jon37260/alfredo-p10k/pplacer-test/model_info.txt",
+        "Stripped refpkg (removed 0 files)",
+        "Loaded initial files into empty refpkg"
+    ],
+    "rollback": {
+        "metadata": {
+            "create_date": "2025-09-17 09:13:24",
+            "format_version": "1.1",
+            "locus": "16S"
+        },
+        "files": {
+            "aln_fasta": "SSU_Amoebozoa_Metazoa_mafft_gt03.fasta",
+            "tree": "SSU_Amoebozoa_Metazoa_mafft_gt03.fasta.treefile"
+        },
+        "md5": {
+            "aln_fasta": "6107852c87c20efc6cb5423a90c05e29",
+            "tree": "13e90090c5d1076a4e96853c684d4880"
+        },
+        "rollback": null
+    },
+    "rollforward": null
+}

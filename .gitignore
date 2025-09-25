@@ -205,3 +205,21 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Project specific - P10K SSU Screening Tool
+screening_tool_output/
+screening_tool_results/
+results/
+
+# Bioinformatics temp files
+*.blast
+*.phr
+*.pin
+*.psq
+*.nin
+*.nhr
+*.nsq
+*.aux
+*.jplace
+*.tmp
+
