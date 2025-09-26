@@ -10,8 +10,7 @@ class SnakemakeRunner:
     """Handles execution of Snakemake workflows for SSU screening."""
     
     def __init__(self, fasta, taxonomy, output_dir, threads=1, 
-                 only_18s=False, only_16s=False, dry_run=False, 
-                 keep_temp=False, verbose=False):
+                 only_18s=False, only_16s=False, dry_run=False):
         """Initialize the runner with configuration parameters."""
         self.fasta = os.path.abspath(fasta)
         self.taxonomy = os.path.abspath(taxonomy)
@@ -20,8 +19,6 @@ class SnakemakeRunner:
         self.only_18s = only_18s
         self.only_16s = only_16s
         self.dry_run = dry_run
-        self.keep_temp = keep_temp
-        self.verbose = verbose
         
         # Get the Snakefile path using a simple file system approach
         self.snakefile_path = self._get_snakefile_path()
@@ -31,7 +28,7 @@ class SnakemakeRunner:
         # Look for the Snakefile relative to this module
         current_dir = Path(__file__).parent
         snakefile_path = current_dir / 'workflows' / 'screening.smk'
-        
+
         if snakefile_path.exists():
             return str(snakefile_path.resolve())
         else:
@@ -47,16 +44,27 @@ class SnakemakeRunner:
         Returns:
             str: Space-separated config string for Snakemake
         """
+        current_dir = Path(__file__).parent
+
         if eighteen_s:
-            ref_pckg = ''
+            ref_pckg = current_dir / 'data' / 'reference_packages' / 'SSU_Amoebozoa_Metazoa.refpkg'
+            query_file = current_dir / 'data' / 'queries' / 'pr2_version_5.1.0_18S_divisions_query.fasta'
+            ref_aln = ref_pckg / 'SSU_Amoebozoa_Metazoa_mafft_gt03.fasta'
         else:
-            ref_pckg = '_16S'
+            # Placeholder, replace with 16S path 
+            ref_pckg = current_dir / 'data' / 'reference_packages' / 'SSU_16S.refpkg'
+            # Placeholder, replace with 16S path 
+            query_file = current_dir / 'data' / 'queries' / '16S_query.fasta'  
+            # Placeholder, replace with 16S path 
+            ref_aln = ref_pckg / 'SSU_Amoebozoa_Metazoa_mafft_gt03.fasta'
 
         config_items = [
             f'in_fasta={self.fasta}',
             f'in_taxonomy={self.taxonomy}',
             f'out_dir={self.output_dir}',
             f'ref_pckg={ref_pckg}',
+            f'query_fasta={query_file}',
+            f'ref_aln={ref_aln}',
         ]
 
         return ' '.join(config_items)
@@ -83,16 +91,7 @@ class SnakemakeRunner:
         if self.dry_run:
             smk_frags.append('--dry-run')
         
-        if self.verbose:
-            smk_frags.append('--verbose')
-        
-        if not self.keep_temp:
-            smk_frags.append('--delete-temp-output')
-        
         smk_cmd = ' '.join(smk_frags)
-        
-        if self.verbose:
-            print(f"Running: {smk_cmd}")
         
         try:
             subprocess.run(smk_cmd, shell=True, executable='/bin/bash', check=True)
@@ -105,30 +104,13 @@ class SnakemakeRunner:
         # Ensure output directory exists
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
         
-        if self.verbose:
-            print(f"Starting P10K SSU screening...")
-            print(f"Input FASTA: {self.fasta}")
-            print(f"Taxonomy: {self.taxonomy}")
-            print(f"Output directory: {self.output_dir}")
-            print(f"Threads: {self.threads}")
-        
         # Determine which analyses to run
         run_18s = not self.only_16s
         run_16s = not self.only_18s
         
-        try:
-            if run_18s:
-                if self.verbose:
-                    print("Running 18S SSU screening...")
-                self.run_snakemake(eighteen_s=True)
-            
-            if run_16s:
-                if self.verbose:
-                    print("Running 16S SSU screening...")
-                self.run_snakemake(eighteen_s=False)
-                
-        except subprocess.CalledProcessError as e:
-            raise RuntimeError(f"Snakemake execution failed: {e}")
+
+        if run_18s:
+            self.run_snakemake(eighteen_s=True)
         
-        if self.verbose:
-            print("Screening workflow completed successfully!")
+        if run_16s:
+            self.run_snakemake(eighteen_s=False)

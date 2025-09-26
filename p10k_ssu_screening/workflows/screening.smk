@@ -2,6 +2,13 @@ in_fasta = config['in_fasta']
 in_taxonomy = config['in_taxonomy']
 out_dir = config['out_dir']
 ref_pckg = config['ref_pckg']
+query_fasta = config['query_fasta']
+ref_aln = config['ref_aln']
+
+# Extract basename of input fasta file for database naming
+import os
+input_basename = os.path.splitext(os.path.basename(in_fasta))[0]
+
 
 rule all:
     input:
@@ -11,70 +18,111 @@ rule make_blast_db:
     input:
         in_fasta
     output:
-        db = in_fasta + '.nin'
+        db = f'{out_dir}/blast_db/{input_basename}.nin',
+        other_files = multiext(f'{out_dir}/blast_db/{input_basename}', '.nhr', '.nsq')
+    params:
+        db_name = f'{out_dir}/blast_db/{input_basename}'
     log:
         f'{out_dir}/logs/make_blast_db.log'
     shell:
         '''
-        makeblastdb -in {input} -dbtype nucl &> {log}
+        mkdir -p {out_dir}/blast_db
+        makeblastdb -in {input} -dbtype nucl -out {params.db_name} &> {log}
         '''
 
 rule blast:
     input:
-        db = in_fasta + '.nin',
-        query = in_fasta
+        db = f'{out_dir}/blast_db/{input_basename}.nin',
+        query = query_fasta
     output:
-        f'{out_dir}/blast/blast_results.txt'
+        f'{out_dir}/blast/results.txt'
     params:
-        outfmt = '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore'
+        outfmt = '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore sseq',
+        db_name = f'{out_dir}/blast_db/{input_basename}'
     threads:
         workflow.cores
     log:
-        f'{out_dir}/logs/blast/blast.log'
+        f'{out_dir}/logs/blast.log'
     shell:
         '''
-        blastn -db {input.db} -query {input.query} -out {output} -outfmt "{params.outfmt}" -num_threads {threads} 2> {log}
+        mkdir -p {out_dir}/blast
+        blastn -db {params.db_name} -query {input.query} -out {output} -outfmt "{params.outfmt}" -num_threads {threads} 2> {log}
         '''
 
 rule parse_blast:
     input:
-        f'{out_dir}/blast/blast_results.txt'
+        f'{out_dir}/blast/results.txt'
     output:
-        f'{out_dir}/parsed/parsed_results.txt'
+        txt = f'{out_dir}/parsed_blast/parsed_results.txt',
+        fasta = f'{out_dir}/parsed_blast/parsed_sequences.fasta'
     log:
         f'{out_dir}/logs/parse_blast/parse_blast.log'
     run:
-        # check/correct orientation
-        # reconcile the same hit from different queries
-        with open(output[0], 'w') as f:
-            f.write("# Placeholder for parsed blast results\n")
+        # Dictionary to store the longest sequence for each unique header
+        sequences = {}
+        blast_lines = {}
+        
+        with open(input[0], 'r') as infile:
+            for line in infile:
+                parts = line.strip().split('\t')
+                if len(parts) < 13:
+                    continue
+                qseqid, sseqid, pident, length, mismatch, gapopen, qstart, qend, sstart, send, evalue, bitscore, sseq = parts
+                
+                # Keep track of the longest sequence for each unique sseqid
+                if sseqid not in sequences or len(sseq) > len(sequences[sseqid]):
+                    sequences[sseqid] = sseq
+                    blast_lines[sseqid] = line
+        
+        # Write output files
+        with open(output.txt, 'w') as out_txt, open(output.fasta, 'w') as out_fasta:
+            for sseqid, sequence in sequences.items():
+                out_txt.write(blast_lines[sseqid])
+                out_fasta.write(f'>{sseqid}\n{sequence}\n')
 
-rule mafft_add:
+rule cdhit:
     input:
-        ref = f'{out_dir}/reference/reference{ref_pckg}.fasta',
-        query = f'{out_dir}/parsed/parsed_results.txt'
+        f'{out_dir}/parsed_blast/parsed_sequences.fasta'
     output:
-        f'{out_dir}/alignment/aligned.fasta'
+        f'{out_dir}/cd-hit/clustered_sequences.fasta'
+    params:
+        threshold = 0.99
     threads:
         workflow.cores
     log:
-        f'{out_dir}/logs/mafft/mafft.log'
+        f'{out_dir}/logs/cd-hit.log'
     shell:
         '''
-        mafft --add {input.query} --keeplength --thread {threads} {input.ref} > {output} 2> {log}
+        cd-hit -i {input} -o {output} -c {params.threshold} -T {threads} &> {log}
+        '''
+
+rule mafft:
+    input:
+        f'{out_dir}/cd-hit/clustered_sequences.fasta'
+    output:
+        f'{out_dir}/mafft/aligned.fasta'
+    params:
+        ref = ref_aln
+    threads:
+        workflow.cores
+    log:
+        f'{out_dir}/logs/mafft.log'
+    shell:
+        '''
+        mafft --add {input} --keeplength --thread {threads} {params.ref} > {output} 2> {log}
         '''
 
 rule pplacer:
     input:
-        f'{out_dir}/alignment/aligned.fasta'
+        f'{out_dir}/mafft/aligned.fasta'
     output:
-        f'{out_dir}/placement/placement.jplace'
+        f'{out_dir}/pplacer/placement.jplace'
     params:
-        refpkg = lambda wildcards: config.get('pplacer_refpkg', f'reference_packages/SSU_Amoebozoa_Metazoa{ref_pckg}.refpkg')
+        refpkg = ref_pckg
     threads:
         workflow.cores
     log:
-        f'{out_dir}/logs/pplacer/pplacer.log'
+        f'{out_dir}/logs/pplacer.log'
     shell:
         '''
         pplacer -c {params.refpkg} -o {output} -j {threads} {input} &> {log}
@@ -82,11 +130,11 @@ rule pplacer:
 
 rule guppy:
     input:
-        f'{out_dir}/placement/placement.jplace'
+        f'{out_dir}/pplacer/placement.jplace'
     output:
         f'{out_dir}/guppy/guppy_results.txt'
     log:
-        f'{out_dir}/logs/guppy/guppy.log'
+        f'{out_dir}/logs/guppy.log'
     shell:
         '''
         guppy classify {input} > {output} 2> {log}

@@ -50,14 +50,6 @@ Examples:
                        action='store_true',
                        help='Show what would be run without executing')
     
-    parser.add_argument('--keep-temp', 
-                       action='store_true',
-                       help='Keep temporary files')
-    
-    parser.add_argument('-v', '--verbose', 
-                       action='store_true',
-                       help='Verbose output')
-    
     return parser
 
 def validate_args(args):
@@ -99,15 +91,11 @@ def main():
         only_18s=getattr(args, '18s_only', False),
         only_16s=getattr(args, '16s_only', False),
         dry_run=args.dry_run,
-        keep_temp=args.keep_temp,
-        verbose=args.verbose
     )
     
     try:
         runner.run()
-        print(f"Screening completed successfully. Results in: {args.output_dir}")
     except Exception as e:
-        print(f"Error during screening: {e}", file=sys.stderr)
         sys.exit(1)
 
 if __name__ == '__main__':
