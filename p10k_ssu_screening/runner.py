@@ -9,16 +9,15 @@ from pathlib import Path
 class SnakemakeRunner:
     """Handles execution of Snakemake workflows for SSU screening."""
     
-    def __init__(self, fasta, taxonomy, output_dir, threads=1, 
-                 only_18s=False, only_16s=False, dry_run=False):
+    def __init__(self, fasta, output_dir, supergroup, threads=1, 
+                 dry_run=False, pplacer_cutoff_length=200):
         """Initialize the runner with configuration parameters."""
         self.fasta = os.path.abspath(fasta)
-        self.taxonomy = os.path.abspath(taxonomy)
         self.output_dir = os.path.abspath(output_dir)
+        self.supergroup = supergroup
         self.threads = threads
-        self.only_18s = only_18s
-        self.only_16s = only_16s
         self.dry_run = dry_run
+        self.pplacer_cutoff_length = pplacer_cutoff_length
         
         # Get the Snakefile path using a simple file system approach
         self.snakefile_path = self._get_snakefile_path()
@@ -34,7 +33,7 @@ class SnakemakeRunner:
         else:
             raise FileNotFoundError(f"Could not find Snakemake workflow file at: {snakefile_path}")
     
-    def make_config(self, eighteen_s=True):
+    def make_config(self):
         """
         Make config list to be passed to Snakemake.
         
@@ -46,41 +45,35 @@ class SnakemakeRunner:
         """
         current_dir = Path(__file__).parent
 
-        if eighteen_s:
-            ref_pckg = current_dir / 'data' / 'reference_packages' / 'SSU_Amoebozoa_Metazoa.refpkg'
-            query_file = current_dir / 'data' / 'queries' / 'pr2_version_5.1.0_18S_divisions_query.fasta'
-            ref_aln = ref_pckg / 'SSU_Amoebozoa_Metazoa_mafft_gt03.fasta'
-        else:
-            # Placeholder, replace with 16S path 
-            ref_pckg = current_dir / 'data' / 'reference_packages' / 'SSU_16S.refpkg'
-            # Placeholder, replace with 16S path 
-            query_file = current_dir / 'data' / 'queries' / '16S_query.fasta'  
-            # Placeholder, replace with 16S path 
-            ref_aln = ref_pckg / 'SSU_Amoebozoa_Metazoa_mafft_gt03.fasta'
+        # Use the required supergroup parameter
+        supergroup_of_interest = self.supergroup
+
+        ref_pckg = current_dir / 'data' / 'reference_packages' / f'{supergroup_of_interest}.refpkg'
+        query_file = current_dir / 'data' / 'queries' / 'pr2_version_5.1.0_18S_divisions_query.fasta'
+        ref_aln = ref_pckg / f'{supergroup_of_interest}.aln'
 
         config_items = [
             f'in_fasta={self.fasta}',
-            f'in_taxonomy={self.taxonomy}',
             f'out_dir={self.output_dir}',
             f'ref_pckg={ref_pckg}',
             f'query_fasta={query_file}',
             f'ref_aln={ref_aln}',
+            f'supergroup_of_interest={supergroup_of_interest}',
+            f'pplacer_cutoff_length={self.pplacer_cutoff_length}'
         ]
 
         return ' '.join(config_items)
     
-    def run_snakemake(self, eighteen_s=True):
+    def run_snakemake(self):
         """
         Combine snakemake command fragments and run snakemake.
-        
-        Args:
-            eighteen_s (bool): Whether to run 18S analysis
+
         """
         # Build Snakemake command
         smk_frags = [
             'snakemake',
             f'-s {self.snakefile_path}',
-            f'--config {self.make_config(eighteen_s)}',
+            f'--config {self.make_config()}',
             f'--cores {self.threads}',
             '--rerun-incomplete',
             '--keep-going',
@@ -104,13 +97,5 @@ class SnakemakeRunner:
         # Ensure output directory exists
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
         
-        # Determine which analyses to run
-        run_18s = not self.only_16s
-        run_16s = not self.only_18s
-        
-
-        if run_18s:
-            self.run_snakemake(eighteen_s=True)
-        
-        if run_16s:
-            self.run_snakemake(eighteen_s=False)
+        # Run 18S analysis
+        self.run_snakemake()

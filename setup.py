@@ -7,12 +7,12 @@ try:
     with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
         long_description = f.read()
 except FileNotFoundError:
-    long_description = "SSU screening tool for P10K project genomic and transcriptomic data"
+    long_description = "SSU screening tool for genomic and transcriptomic data"
 
 setup(
     name='p10k-ssu-screening-tool',
     version='1.0.0',
-    description='SSU screening tool for P10K project genomic and transcriptomic data',
+    description='SSU screening tool for genomic and transcriptomic data',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/AlexTiceLab/P10K-SSU-screening-tool',
@@ -22,9 +22,6 @@ setup(
     
     # Package discovery
     packages=find_packages(),
-    
-    # Python version requirement
-    python_requires='>=3.13',   
     
     # Command-line entry point
     entry_points={
@@ -44,7 +41,7 @@ setup(
     include_package_data=True,
     
     # Keywords for discovery
-    keywords='bioinformatics genomics transcriptomics SSU screening phylogeny P10K',
+    keywords='bioinformatics genomics transcriptomics SSU-screening',
     
     # Project URLs
     project_urls={
