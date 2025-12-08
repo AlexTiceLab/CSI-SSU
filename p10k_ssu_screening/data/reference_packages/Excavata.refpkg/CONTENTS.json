@@ -1,0 +1,53 @@
+{
+    "metadata": {
+        "create_date": "2025-12-01 08:55:04",
+        "format_version": "1.1",
+        "locus": "18S"
+    },
+    "files": {
+        "phylo_model": "phylo_modelyy26myep.json",
+        "aln_fasta": "Excavata.aln",
+        "seq_info": "Excavata.seq_info",
+        "taxonomy": "Excavata.tax",
+        "tree": "treesu6pycvu.tre",
+        "tree_stats": "Excavata.info"
+    },
+    "md5": {
+        "phylo_model": "9d0713d84908c2e20f0be7e945b64634",
+        "aln_fasta": "8d3fddabe9240181e448c66448878074",
+        "seq_info": "09c80034ab13ee048a8e8abec7aaca8b",
+        "taxonomy": "fb91f9456f72a4adffbe4fce880d1e4f",
+        "tree": "8d3b0df2e8c4dad66396deda95e755ba",
+        "tree_stats": "0aa422faa187acdbc9a62b8c5c7ffcea"
+    },
+    "log": [
+        "Rerooted",
+        "Stripped refpkg (removed 0 files)",
+        "Loaded initial files into empty refpkg"
+    ],
+    "rollback": {
+        "metadata": {
+            "create_date": "2025-12-01 08:55:04",
+            "format_version": "1.1",
+            "locus": "18S"
+        },
+        "files": {
+            "phylo_model": "phylo_modelyy26myep.json",
+            "aln_fasta": "Excavata.aln",
+            "seq_info": "Excavata.seq_info",
+            "taxonomy": "Excavata.tax",
+            "tree": "Excavata.tre",
+            "tree_stats": "Excavata.info"
+        },
+        "md5": {
+            "phylo_model": "9d0713d84908c2e20f0be7e945b64634",
+            "aln_fasta": "8d3fddabe9240181e448c66448878074",
+            "seq_info": "09c80034ab13ee048a8e8abec7aaca8b",
+            "taxonomy": "fb91f9456f72a4adffbe4fce880d1e4f",
+            "tree": "e4bf72f49f9b2c610914a1cee46c9995",
+            "tree_stats": "0aa422faa187acdbc9a62b8c5c7ffcea"
+        },
+        "rollback": null
+    },
+    "rollforward": null
+}

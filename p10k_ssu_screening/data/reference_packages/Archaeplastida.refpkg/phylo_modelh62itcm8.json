@@ -1,0 +1,19 @@
+{
+    "program": "RAxML version 8.2.12",
+    "datatype": "DNA",
+    "empirical_frequencies": true,
+    "subs_model": "GTR",
+    "subs_rates": {
+        "ac": 1.066598,
+        "ag": 2.859185,
+        "at": 1.200018,
+        "cg": 0.880298,
+        "ct": 4.920101,
+        "gt": 1.0
+    },
+    "gamma": {
+        "n_cats": 4,
+        "alpha": 0.94441
+    },
+    "ras_model": "gamma"
+}

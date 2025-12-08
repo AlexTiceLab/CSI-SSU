@@ -1,0 +1,53 @@
+{
+    "metadata": {
+        "create_date": "2025-12-08 10:30:06",
+        "format_version": "1.1",
+        "locus": "18S"
+    },
+    "files": {
+        "phylo_model": "phylo_model6xt5xjio.json",
+        "aln_fasta": "TSAR.aln",
+        "seq_info": "TSAR.seq_info",
+        "taxonomy": "TSAR.tax",
+        "tree": "treehc0i5mte.tre",
+        "tree_stats": "TSAR.info"
+    },
+    "md5": {
+        "phylo_model": "7612958ba6c361d15f36df5f899cb55b",
+        "aln_fasta": "40d9f24169b1f61c273bde58f8283d9e",
+        "seq_info": "7530fab1401ae814b875d2855f001941",
+        "taxonomy": "ac91fa02fb2cddbd0e58cf7a7a0ee335",
+        "tree": "f3eeb3d687e139218f000519d005064c",
+        "tree_stats": "abf17cc15bf3b859fc8aea7317696914"
+    },
+    "log": [
+        "Rerooted",
+        "Stripped refpkg (removed 0 files)",
+        "Loaded initial files into empty refpkg"
+    ],
+    "rollback": {
+        "metadata": {
+            "create_date": "2025-12-08 10:30:06",
+            "format_version": "1.1",
+            "locus": "18S"
+        },
+        "files": {
+            "phylo_model": "phylo_model6xt5xjio.json",
+            "aln_fasta": "TSAR.aln",
+            "seq_info": "TSAR.seq_info",
+            "taxonomy": "TSAR.tax",
+            "tree": "TSAR.tre",
+            "tree_stats": "TSAR.info"
+        },
+        "md5": {
+            "phylo_model": "7612958ba6c361d15f36df5f899cb55b",
+            "aln_fasta": "40d9f24169b1f61c273bde58f8283d9e",
+            "seq_info": "7530fab1401ae814b875d2855f001941",
+            "taxonomy": "ac91fa02fb2cddbd0e58cf7a7a0ee335",
+            "tree": "0925298f7cc30e9ae7b4924ae04633f4",
+            "tree_stats": "abf17cc15bf3b859fc8aea7317696914"
+        },
+        "rollback": null
+    },
+    "rollforward": null
+}

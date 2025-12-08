@@ -1,0 +1,53 @@
+{
+    "metadata": {
+        "create_date": "2025-12-01 08:40:22",
+        "format_version": "1.1",
+        "locus": "18S"
+    },
+    "files": {
+        "phylo_model": "phylo_model1ntrhgxf.json",
+        "aln_fasta": "Amoebozoa.aln",
+        "seq_info": "Amoebozoa.seq_info",
+        "taxonomy": "Amoebozoa.tax",
+        "tree": "tree4thxkqpg.tre",
+        "tree_stats": "Amoebozoa.info"
+    },
+    "md5": {
+        "phylo_model": "a4861370286d13bbd2fd54783f356148",
+        "aln_fasta": "0d2f7bf58f04a5598f9fabc353ae9e6c",
+        "seq_info": "021d6151c4a3b0be4c661536543db40e",
+        "taxonomy": "c8a8090b2b387992aeabf38efdf24a66",
+        "tree": "61cca16147596474541e2c8b7f1d97f1",
+        "tree_stats": "e55f03fdd6dca6071250c4f1cbf0763c"
+    },
+    "log": [
+        "Rerooted",
+        "Stripped refpkg (removed 0 files)",
+        "Loaded initial files into empty refpkg"
+    ],
+    "rollback": {
+        "metadata": {
+            "create_date": "2025-12-01 08:40:22",
+            "format_version": "1.1",
+            "locus": "18S"
+        },
+        "files": {
+            "phylo_model": "phylo_model1ntrhgxf.json",
+            "aln_fasta": "Amoebozoa.aln",
+            "seq_info": "Amoebozoa.seq_info",
+            "taxonomy": "Amoebozoa.tax",
+            "tree": "Amoebozoa.tre",
+            "tree_stats": "Amoebozoa.info"
+        },
+        "md5": {
+            "phylo_model": "a4861370286d13bbd2fd54783f356148",
+            "aln_fasta": "0d2f7bf58f04a5598f9fabc353ae9e6c",
+            "seq_info": "021d6151c4a3b0be4c661536543db40e",
+            "taxonomy": "c8a8090b2b387992aeabf38efdf24a66",
+            "tree": "ff3fe6cc453bed6d1fe9396bcdc2e40b",
+            "tree_stats": "e55f03fdd6dca6071250c4f1cbf0763c"
+        },
+        "rollback": null
+    },
+    "rollforward": null
+}
