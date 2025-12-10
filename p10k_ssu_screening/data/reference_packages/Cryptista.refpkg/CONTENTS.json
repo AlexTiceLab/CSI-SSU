@@ -1,0 +1,53 @@
+{
+    "metadata": {
+        "create_date": "2025-12-01 08:52:37",
+        "format_version": "1.1",
+        "locus": "18S"
+    },
+    "files": {
+        "phylo_model": "phylo_model3fjhphdi.json",
+        "aln_fasta": "Cryptista.aln",
+        "seq_info": "Cryptista.seq_info",
+        "taxonomy": "Cryptista.tax",
+        "tree": "treez1ga1p77.tre",
+        "tree_stats": "Cryptista.info"
+    },
+    "md5": {
+        "phylo_model": "4ee5e1e52cfc1f1952d7bba488ee4325",
+        "aln_fasta": "9134bdbc6737cb245b0237482608777e",
+        "seq_info": "710883450e0828bf79b001f5cdd77dd6",
+        "taxonomy": "ad4c9a1ece4ff98df3954d9154032377",
+        "tree": "68b76e45a80f3b5e36762880dae64b03",
+        "tree_stats": "b6b0a3acb393290ca091fc3b39833801"
+    },
+    "log": [
+        "Rerooted",
+        "Stripped refpkg (removed 0 files)",
+        "Loaded initial files into empty refpkg"
+    ],
+    "rollback": {
+        "metadata": {
+            "create_date": "2025-12-01 08:52:37",
+            "format_version": "1.1",
+            "locus": "18S"
+        },
+        "files": {
+            "phylo_model": "phylo_model3fjhphdi.json",
+            "aln_fasta": "Cryptista.aln",
+            "seq_info": "Cryptista.seq_info",
+            "taxonomy": "Cryptista.tax",
+            "tree": "Cryptista.tre",
+            "tree_stats": "Cryptista.info"
+        },
+        "md5": {
+            "phylo_model": "4ee5e1e52cfc1f1952d7bba488ee4325",
+            "aln_fasta": "9134bdbc6737cb245b0237482608777e",
+            "seq_info": "710883450e0828bf79b001f5cdd77dd6",
+            "taxonomy": "ad4c9a1ece4ff98df3954d9154032377",
+            "tree": "c2621cfa03c62e509d286e78d6732628",
+            "tree_stats": "b6b0a3acb393290ca091fc3b39833801"
+        },
+        "rollback": null
+    },
+    "rollforward": null
+}

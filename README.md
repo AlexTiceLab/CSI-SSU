@@ -32,7 +32,7 @@ The tool requires the following external programs to be installed and available 
 - **BLAST+** (makeblastdb, blastn)
 - **MAFFT** (for sequence alignment)
 - **pplacer** (for phylogenetic placement)
-- **guppy** (for classification post-processing)
+- **cd-hit** (for clustering sequences)
 - **Snakemake** (workflow management)
 
 You can install these using conda:
@@ -54,15 +54,6 @@ p10k-ssu-screen input_sequences.fasta taxonomy_info.txt -o results/ -t 8
 p10k-ssu-screen --18s-only input_sequences.fasta taxonomy_info.txt
 ```
 
-### Alternative Execution Methods
-```bash
-# As a Python module
-python -m p10k_ssu_screening input_sequences.fasta taxonomy_info.txt
-
-# From source directory
-python -m p10k_ssu_screening.cli input_sequences.fasta taxonomy_info.txt
-```
-
 ## Command-Line Options
 
 ```
@@ -78,8 +69,6 @@ optional arguments:
   --18s-only           Run only 18S SSU screening
   --16s-only           Run only 16S SSU screening
   --dry-run            Show what would be run without executing
-  --keep-temp          Keep temporary files
-  -v, --verbose        Verbose output
 ```
 
 ## Input Files
@@ -93,7 +82,7 @@ ATCGATCGATCGATCG...
 GCTAGCTAGCTAGCTA...
 ```
 
-### Taxonomy File
+### Taxonomy File (FIX THIS ONCE WE HAVE FINALIZED THE FORMAT)
 Tab-separated file with taxonomic information:
 ```
 sequence_id    taxonomy_string
@@ -108,11 +97,14 @@ The tool creates a structured output directory:
 ```
 screening_tool_output/
 ├── logs/              # Log files for each step
+├── blast_db/          # BLAST database files
 ├── blast/             # BLAST results
-├── alignment/         # MAFFT alignments
-├── placement/         # pplacer phylogenetic placements
-├── guppy/            # Classification results
-└── summary/          # Final summary reports
+├── parsed_blast/      # Parsed BLAST hits
+├── cd-hit/            # CD-HIT clustered sequences
+├── mafft/             # MAFFT alignments
+├── pplacer/           # pplacer phylogenetic placements
+├── guppy/             # Classification results
+└── summary/           # Final summary reports
 ```
 
 ### Main Output Files
@@ -144,19 +136,9 @@ p10k-ssu-screen input.fasta taxonomy.txt --dry-run -v
 ```
 
 
-## Troubleshooting
-
-### Common Issues
-
-1. **Command not found**: Ensure external dependencies (BLAST, MAFFT, pplacer) are installed and in PATH
-2. **Permission errors**: Check write permissions for output directory
-3. **Memory issues**: Reduce thread count or use smaller input files
-4. **Reference package errors**: Ensure reference packages are properly installed
-
 ### Getting Help
 
 - **GitHub Issues**: [Report bugs or request features](https://github.com/AlexTiceLab/P10K-SSU-screening-tool/issues)
-- **Verbose output**: Use `-v` flag for detailed execution information
 - **Dry run**: Use `--dry-run` to see what commands would be executed
 
 ## License

@@ -16,9 +16,7 @@ def create_parser():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  p10k-ssu-screen input.fasta taxonomy.txt
-  p10k-ssu-screen input.fasta taxonomy.txt -o results/ -t 8
-  p10k-ssu-screen --18s-only input.fasta taxonomy.txt
+  p10k-ssu-screen input.fasta -o results/ -t 8 --supergroup Amoebozoa
         """
     )
     
@@ -27,36 +25,29 @@ Examples:
     
     # Required arguments
     parser.add_argument('fasta', help='Input FASTA file path')
-    parser.add_argument('taxonomy', help='Input taxonomic classification file')
+
+    parser.add_argument('--supergroup', 
+                       type=str,
+                       required=True,
+                       help='Supergroup of interest (e.g., Amoebozoa, Excavata, TSAR)')
     
     # Optional arguments
     parser.add_argument('-o', '--output-dir', 
                        default='screening_tool_output',
                        help='Output directory (default: screening_tool_output)')
     
+    parser.add_argument('--pplacer-cutoff-length',
+                       type=int,
+                       default=500,
+                       help='Cutoff length for pplacer (default: 500)')
+    
     parser.add_argument('-t', '--threads', 
                        type=int, default=1,
                        help='Number of threads to use (default: 1)')
     
-    parser.add_argument('--18s-only', 
-                       action='store_true',
-                       help='Run only 18S SSU screening')
-    
-    parser.add_argument('--16s-only', 
-                       action='store_true',
-                       help='Run only 16S SSU screening')
-    
     parser.add_argument('--dry-run', 
                        action='store_true',
                        help='Show what would be run without executing')
-    
-    parser.add_argument('--keep-temp', 
-                       action='store_true',
-                       help='Keep temporary files')
-    
-    parser.add_argument('-v', '--verbose', 
-                       action='store_true',
-                       help='Verbose output')
     
     return parser
 
@@ -66,14 +57,11 @@ def validate_args(args):
     if not os.path.isfile(args.fasta):
         print(f"Error: Input FASTA file '{args.fasta}' not found", file=sys.stderr)
         return False
-        
-    if not os.path.isfile(args.taxonomy):
-        print(f"Error: Taxonomy file '{args.taxonomy}' not found", file=sys.stderr)
-        return False
     
-    # Check for conflicting options
-    if getattr(args, '18s_only', False) and getattr(args, '16s_only', False):
-        print("Error: Cannot specify both --18s-only and --16s-only", file=sys.stderr)
+    # Validate required supergroup
+    valid_supergroups = ['Amoebozoa', 'Obazoa', 'Excavata', 'TSAR', 'Archaeplastida', 'Cryptista', 'Haptista', 'Eukaryota_X', 'CRuMs', 'Provora']
+    if args.supergroup not in valid_supergroups:
+        print(f"Error: Invalid supergroup '{args.supergroup}'. Valid options: {', '.join(valid_supergroups)}", file=sys.stderr)
         return False
     
     # Create output directory
@@ -93,21 +81,16 @@ def main():
     # Configure runner
     runner = SnakemakeRunner(
         fasta=args.fasta,
-        taxonomy=args.taxonomy,
         output_dir=args.output_dir,
+        supergroup=args.supergroup,
         threads=args.threads,
-        only_18s=getattr(args, '18s_only', False),
-        only_16s=getattr(args, '16s_only', False),
         dry_run=args.dry_run,
-        keep_temp=args.keep_temp,
-        verbose=args.verbose
+        pplacer_cutoff_length=args.pplacer_cutoff_length
     )
     
     try:
         runner.run()
-        print(f"Screening completed successfully. Results in: {args.output_dir}")
     except Exception as e:
-        print(f"Error during screening: {e}", file=sys.stderr)
         sys.exit(1)
 
 if __name__ == '__main__':
