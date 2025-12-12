@@ -1,22 +1,22 @@
 {
     "metadata": {
-        "create_date": "2025-12-01 08:47:20",
+        "create_date": "2025-12-12 09:56:10",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_modelh62itcm8.json",
+        "phylo_model": "phylo_modelvczlcmum.json",
         "aln_fasta": "Archaeplastida.aln",
         "seq_info": "Archaeplastida.seq_info",
         "taxonomy": "Archaeplastida.tax",
-        "tree": "treeanhfwdy6.tre",
+        "tree": "treeotcng08e.tre",
         "tree_stats": "Archaeplastida.info"
     },
     "md5": {
         "phylo_model": "c4887b17801d7afe29edb76a6add36e8",
         "aln_fasta": "eaee0fcef5b569f8dc710c2643fb902d",
-        "seq_info": "d8ea707adb62ffe1b835c95298b785b2",
-        "taxonomy": "e2d20d5b4cba6d64dca2ae846271440c",
+        "seq_info": "1bdcd6e3a5f57c2aa9e593c35065233f",
+        "taxonomy": "cea1eee8a8676ae8da2d59de163544d4",
         "tree": "c959b076df301533d935359657ba8172",
         "tree_stats": "cbf2d3c5fb911f8049821071633aeee9"
     },
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-01 08:47:20",
+            "create_date": "2025-12-12 09:56:10",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_modelh62itcm8.json",
+            "phylo_model": "phylo_modelvczlcmum.json",
             "aln_fasta": "Archaeplastida.aln",
             "seq_info": "Archaeplastida.seq_info",
             "taxonomy": "Archaeplastida.tax",
@@ -42,8 +42,8 @@
         "md5": {
             "phylo_model": "c4887b17801d7afe29edb76a6add36e8",
             "aln_fasta": "eaee0fcef5b569f8dc710c2643fb902d",
-            "seq_info": "d8ea707adb62ffe1b835c95298b785b2",
-            "taxonomy": "e2d20d5b4cba6d64dca2ae846271440c",
+            "seq_info": "1bdcd6e3a5f57c2aa9e593c35065233f",
+            "taxonomy": "cea1eee8a8676ae8da2d59de163544d4",
             "tree": "08ccb13ee42a6392c46a5a5f42c15261",
             "tree_stats": "cbf2d3c5fb911f8049821071633aeee9"
         },

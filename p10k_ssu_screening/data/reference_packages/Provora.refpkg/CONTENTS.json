@@ -1,22 +1,22 @@
 {
     "metadata": {
-        "create_date": "2025-12-01 09:00:08",
+        "create_date": "2025-12-12 09:59:01",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_modelz3_uwkqi.json",
+        "phylo_model": "phylo_modelnzcrxl9j.json",
         "aln_fasta": "Provora.aln",
         "seq_info": "Provora.seq_info",
         "taxonomy": "Provora.tax",
-        "tree": "tree9b5qrcvo.tre",
+        "tree": "tree5e74mq25.tre",
         "tree_stats": "Provora.info"
     },
     "md5": {
         "phylo_model": "b44b2a0b1bcfbff7592248cdf1f2243f",
         "aln_fasta": "9a7184a315019d590fda27702df23216",
-        "seq_info": "f0afbd2f9671e403997ea504eb6bc0d9",
-        "taxonomy": "a9bbdc2cf24c600c4063f5d6e0b802f4",
+        "seq_info": "89ffdb3976d43498bd92a064dd75d38b",
+        "taxonomy": "0f4ef7da06eaf0fa9f00e1043c581bf1",
         "tree": "045a94509954070ad8a9a1119d888a12",
         "tree_stats": "0751293fd2b0d3012a22c64ba8c4decf"
     },
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-01 09:00:08",
+            "create_date": "2025-12-12 09:59:01",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_modelz3_uwkqi.json",
+            "phylo_model": "phylo_modelnzcrxl9j.json",
             "aln_fasta": "Provora.aln",
             "seq_info": "Provora.seq_info",
             "taxonomy": "Provora.tax",
@@ -42,8 +42,8 @@
         "md5": {
             "phylo_model": "b44b2a0b1bcfbff7592248cdf1f2243f",
             "aln_fasta": "9a7184a315019d590fda27702df23216",
-            "seq_info": "f0afbd2f9671e403997ea504eb6bc0d9",
-            "taxonomy": "a9bbdc2cf24c600c4063f5d6e0b802f4",
+            "seq_info": "89ffdb3976d43498bd92a064dd75d38b",
+            "taxonomy": "0f4ef7da06eaf0fa9f00e1043c581bf1",
             "tree": "d5f1cf3c1ca1841c74d42e07cdc90ed4",
             "tree_stats": "0751293fd2b0d3012a22c64ba8c4decf"
         },

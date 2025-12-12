@@ -1,23 +1,23 @@
 {
     "metadata": {
-        "create_date": "2025-12-01 08:52:37",
+        "create_date": "2025-12-12 09:57:34",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_model3fjhphdi.json",
+        "phylo_model": "phylo_modela45ea5vx.json",
         "aln_fasta": "Cryptista.aln",
         "seq_info": "Cryptista.seq_info",
         "taxonomy": "Cryptista.tax",
-        "tree": "treez1ga1p77.tre",
+        "tree": "treeif_oje8r.tre",
         "tree_stats": "Cryptista.info"
     },
     "md5": {
         "phylo_model": "4ee5e1e52cfc1f1952d7bba488ee4325",
         "aln_fasta": "9134bdbc6737cb245b0237482608777e",
-        "seq_info": "710883450e0828bf79b001f5cdd77dd6",
-        "taxonomy": "ad4c9a1ece4ff98df3954d9154032377",
-        "tree": "68b76e45a80f3b5e36762880dae64b03",
+        "seq_info": "ce5d4667ac35bbe04a66961b2efc40ed",
+        "taxonomy": "238ae3e15d5990ee0035b8f89116e8c5",
+        "tree": "badbfebf96b6028951e96862804b8722",
         "tree_stats": "b6b0a3acb393290ca091fc3b39833801"
     },
     "log": [
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-01 08:52:37",
+            "create_date": "2025-12-12 09:57:34",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_model3fjhphdi.json",
+            "phylo_model": "phylo_modela45ea5vx.json",
             "aln_fasta": "Cryptista.aln",
             "seq_info": "Cryptista.seq_info",
             "taxonomy": "Cryptista.tax",
@@ -42,8 +42,8 @@
         "md5": {
             "phylo_model": "4ee5e1e52cfc1f1952d7bba488ee4325",
             "aln_fasta": "9134bdbc6737cb245b0237482608777e",
-            "seq_info": "710883450e0828bf79b001f5cdd77dd6",
-            "taxonomy": "ad4c9a1ece4ff98df3954d9154032377",
+            "seq_info": "ce5d4667ac35bbe04a66961b2efc40ed",
+            "taxonomy": "238ae3e15d5990ee0035b8f89116e8c5",
             "tree": "c2621cfa03c62e509d286e78d6732628",
             "tree_stats": "b6b0a3acb393290ca091fc3b39833801"
         },

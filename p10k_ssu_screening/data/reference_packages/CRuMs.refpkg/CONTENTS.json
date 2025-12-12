@@ -1,22 +1,22 @@
 {
     "metadata": {
-        "create_date": "2025-12-01 08:49:54",
+        "create_date": "2025-12-12 09:56:56",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_modelnyckyy8q.json",
+        "phylo_model": "phylo_model2vxby5_w.json",
         "aln_fasta": "CRuMs.aln",
         "seq_info": "CRuMs.seq_info",
         "taxonomy": "CRuMs.tax",
-        "tree": "treebwp_ay93.tre",
+        "tree": "treewappvjwe.tre",
         "tree_stats": "CRuMs.info"
     },
     "md5": {
         "phylo_model": "f38409ea6e08569b494be446869823fd",
         "aln_fasta": "378450224666820306ceadb0a69ece7b",
-        "seq_info": "86b479f92b03fc8e7fdf0e8ace5cf0a9",
-        "taxonomy": "9abc3da6b3fefe4bd0dbbe6644b2d508",
+        "seq_info": "527551fb5d440429d483daabb44282d7",
+        "taxonomy": "c53b5faccd2dabfa2b75e3b30187fe29",
         "tree": "63d4a90c8a2c614366f4b9566f98b9f0",
         "tree_stats": "35c5b1ea04b9c5bcd6f0398d85032417"
     },
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-01 08:49:54",
+            "create_date": "2025-12-12 09:56:56",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_modelnyckyy8q.json",
+            "phylo_model": "phylo_model2vxby5_w.json",
             "aln_fasta": "CRuMs.aln",
             "seq_info": "CRuMs.seq_info",
             "taxonomy": "CRuMs.tax",
@@ -42,8 +42,8 @@
         "md5": {
             "phylo_model": "f38409ea6e08569b494be446869823fd",
             "aln_fasta": "378450224666820306ceadb0a69ece7b",
-            "seq_info": "86b479f92b03fc8e7fdf0e8ace5cf0a9",
-            "taxonomy": "9abc3da6b3fefe4bd0dbbe6644b2d508",
+            "seq_info": "527551fb5d440429d483daabb44282d7",
+            "taxonomy": "c53b5faccd2dabfa2b75e3b30187fe29",
             "tree": "6e805e3eef7a6407ab365e00b9d8c3fd",
             "tree_stats": "35c5b1ea04b9c5bcd6f0398d85032417"
         },

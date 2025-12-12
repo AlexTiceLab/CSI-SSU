@@ -1,22 +1,22 @@
 {
     "metadata": {
-        "create_date": "2025-12-01 08:57:47",
+        "create_date": "2025-12-12 09:58:32",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_model71kqseyf.json",
+        "phylo_model": "phylo_modelke5kdiqp.json",
         "aln_fasta": "Haptista.aln",
         "seq_info": "Haptista.seq_info",
         "taxonomy": "Haptista.tax",
-        "tree": "treel2r_8g92.tre",
+        "tree": "trees_idmdyo.tre",
         "tree_stats": "Haptista.info"
     },
     "md5": {
         "phylo_model": "592fe987123d9cb70964297bfa685eba",
         "aln_fasta": "26cd9e7122f470f431d18542ff911808",
-        "seq_info": "49be88bf46da6d0c4889d320f4dd61a1",
-        "taxonomy": "d92a346b68fc19fd6da0331c6179c32b",
+        "seq_info": "0a5488b0d4f96913e7fd5a16677e2afa",
+        "taxonomy": "41028f2af385753059011c8e7bf1aa40",
         "tree": "1b316b1d70263c7f2c689e5512800dd3",
         "tree_stats": "2e366eb5be9b9f244e0c177a4904b673"
     },
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-01 08:57:47",
+            "create_date": "2025-12-12 09:58:32",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_model71kqseyf.json",
+            "phylo_model": "phylo_modelke5kdiqp.json",
             "aln_fasta": "Haptista.aln",
             "seq_info": "Haptista.seq_info",
             "taxonomy": "Haptista.tax",
@@ -42,8 +42,8 @@
         "md5": {
             "phylo_model": "592fe987123d9cb70964297bfa685eba",
             "aln_fasta": "26cd9e7122f470f431d18542ff911808",
-            "seq_info": "49be88bf46da6d0c4889d320f4dd61a1",
-            "taxonomy": "d92a346b68fc19fd6da0331c6179c32b",
+            "seq_info": "0a5488b0d4f96913e7fd5a16677e2afa",
+            "taxonomy": "41028f2af385753059011c8e7bf1aa40",
             "tree": "dcf2e2e49773e3e29b5f481e3da046d0",
             "tree_stats": "2e366eb5be9b9f244e0c177a4904b673"
         },

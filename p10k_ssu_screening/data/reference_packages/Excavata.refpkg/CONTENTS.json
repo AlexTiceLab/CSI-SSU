@@ -1,22 +1,22 @@
 {
     "metadata": {
-        "create_date": "2025-12-01 08:55:04",
+        "create_date": "2025-12-12 09:58:02",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_modelyy26myep.json",
+        "phylo_model": "phylo_modelmrzzemkk.json",
         "aln_fasta": "Excavata.aln",
         "seq_info": "Excavata.seq_info",
         "taxonomy": "Excavata.tax",
-        "tree": "treesu6pycvu.tre",
+        "tree": "treep57r0kcm.tre",
         "tree_stats": "Excavata.info"
     },
     "md5": {
         "phylo_model": "9d0713d84908c2e20f0be7e945b64634",
         "aln_fasta": "8d3fddabe9240181e448c66448878074",
-        "seq_info": "09c80034ab13ee048a8e8abec7aaca8b",
-        "taxonomy": "fb91f9456f72a4adffbe4fce880d1e4f",
+        "seq_info": "a9c9080ea148ecb8d19c42b5736db8a4",
+        "taxonomy": "73ceb6c0a45e3d61f794d832c43b349c",
         "tree": "8d3b0df2e8c4dad66396deda95e755ba",
         "tree_stats": "0aa422faa187acdbc9a62b8c5c7ffcea"
     },
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-01 08:55:04",
+            "create_date": "2025-12-12 09:58:02",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_modelyy26myep.json",
+            "phylo_model": "phylo_modelmrzzemkk.json",
             "aln_fasta": "Excavata.aln",
             "seq_info": "Excavata.seq_info",
             "taxonomy": "Excavata.tax",
@@ -42,8 +42,8 @@
         "md5": {
             "phylo_model": "9d0713d84908c2e20f0be7e945b64634",
             "aln_fasta": "8d3fddabe9240181e448c66448878074",
-            "seq_info": "09c80034ab13ee048a8e8abec7aaca8b",
-            "taxonomy": "fb91f9456f72a4adffbe4fce880d1e4f",
+            "seq_info": "a9c9080ea148ecb8d19c42b5736db8a4",
+            "taxonomy": "73ceb6c0a45e3d61f794d832c43b349c",
             "tree": "e4bf72f49f9b2c610914a1cee46c9995",
             "tree_stats": "0aa422faa187acdbc9a62b8c5c7ffcea"
         },
