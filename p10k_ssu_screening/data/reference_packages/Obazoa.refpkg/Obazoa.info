@@ -1,0 +1,120 @@
+
+You are using a proportion of Invariable sites estimate, although I don't
+like it. The likelihood epsilon "-f e" will be automatically lowered to 0.001
+to avoid unfavorable effects caused by simultaneous optimization of alpha and P-Invar
+
+
+IMPORTANT WARNING: Sequences EU855533.1.813_U and EU855561.1.761_U are exactly identical
+
+
+IMPORTANT WARNING: Sequences AY640980.1.1487_G and AY640986.1.1429_G are exactly identical
+
+
+IMPORTANT WARNING: Sequences EF689825.1.2128_G and EF689827.1.2636_G are exactly identical
+
+
+IMPORTANT WARNING: Sequences EF689825.1.2128_G and EF689875.1.4659_G are exactly identical
+
+
+IMPORTANT WARNING: Sequences JN367360.1.893_U and JN367347.1.909_U are exactly identical
+
+
+IMPORTANT WARNING: Sequences JN367360.1.893_U and JN367340.1.938_U are exactly identical
+
+
+IMPORTANT WARNING: Sequences HQ259059.1.2547_U and AB237657.1.3996_G are exactly identical
+
+
+IMPORTANT WARNING: Sequences GQ154631.1.2534_U and GQ154630.1.2907_U are exactly identical
+
+
+IMPORTANT WARNING: Sequences AF150481.1.1457_G and AF150484.1.1055_G are exactly identical
+
+
+IMPORTANT WARNING: Sequences AY251113.1.2239_G and AY251103.1.2093_G are exactly identical
+
+
+IMPORTANT WARNING: Sequences KF782403.1.842_U and KF782404.1.843_U are exactly identical
+
+
+IMPORTANT WARNING: Sequences AM490840.1.1813_U and X75520.1.2336_G are exactly identical
+
+IMPORTANT WARNING
+Found 12 sequences that are exactly identical to other sequences in the alignment.
+Normally they should be excluded from the analysis.
+
+An alignment file with sequence duplicates removed has already
+been printed to file pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln.reduced
+
+
+Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
+
+
+
+This is RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018.
+
+With greatly appreciated code contributions by:
+Andre Aberer      (HITS)
+Simon Berger      (HITS)
+Alexey Kozlov     (HITS)
+Kassian Kobert    (HITS)
+David Dao         (KIT and HITS)
+Sarah Lutteropp   (KIT and HITS)
+Nick Pattengale   (Sandia)
+Wayne Pfeiffer    (SDSC)
+Akifumi S. Tanabe (NRIFS)
+Charlie Taylor    (UF)
+
+
+Alignment has 1383 distinct alignment patterns
+
+Found 0 invariant alignment patterns that correspond to 0 columns 
+Proportion of gaps and completely undetermined characters in this alignment: 11.75%
+
+RAxML rapid hill-climbing mode
+
+Using 1 distinct models/data partitions with joint branch length optimization
+
+
+Executing 1 inferences on the original alignment using 1 distinct complete random trees
+
+All free model parameters will be estimated by RAxML
+GAMMA+P-Invar model of rate heterogeneity, ML estimate of alpha-parameter
+
+GAMMA+P-Invar Model parameters will be estimated up to an accuracy of 0.0010000000 Log Likelihood units
+
+Partition: 0
+Alignment Patterns: 1383
+Name: No Name Provided
+DataType: DNA
+Substitution Matrix: GTR
+
+
+
+
+RAxML was called as follows:
+
+raxmlHPC-PTHREADS-AVX2 -m GTRGAMMAI -s pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln -n pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln_p18 -T 16 -d -p 18 
+
+
+Partition: 0 with name: No Name Provided
+Base frequencies: 0.268 0.208 0.277 0.246 
+
+Inference[0]: Time 18779.811178 GAMMA+P-Invar-based likelihood -1382346.089916, best rearrangement setting 25
+alpha[0]: 0.927965 invar[0]: 0.000100 rates[0] ac ag at cg ct gt: 1.182525 3.078357 1.363078 0.815569 5.249325 1.000000 
+
+
+Conducting final model optimizations on all 1 trees under GAMMA-based models ....
+
+Inference[0] final GAMMA-based Likelihood: -1382343.667244 tree written to file /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/trees/Obazoa/RAxML_result.pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln_p18
+
+
+Starting final GAMMA-based thorough Optimization on tree 0 likelihood -1382343.667244 .... 
+
+Final GAMMA-based Score of best tree -1382341.244690
+
+Program execution info written to /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/trees/Obazoa/RAxML_info.pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln_p18
+Best-scoring ML tree written to: /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/trees/Obazoa/RAxML_bestTree.pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln_p18
+
+Overall execution time: 20529.282091 secs or 5.702578 hours or 0.237607 days
+

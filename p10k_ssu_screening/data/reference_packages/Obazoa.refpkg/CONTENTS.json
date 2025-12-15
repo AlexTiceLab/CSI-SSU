@@ -1,0 +1,53 @@
+{
+    "metadata": {
+        "create_date": "2025-12-15 10:11:14",
+        "format_version": "1.1",
+        "locus": "18S"
+    },
+    "files": {
+        "phylo_model": "phylo_modely55cu6u8.json",
+        "aln_fasta": "Obazoa.aln",
+        "seq_info": "Obazoa.seq_info",
+        "taxonomy": "Obazoa.tax",
+        "tree": "tree7zvdesw4.tre",
+        "tree_stats": "Obazoa.info"
+    },
+    "md5": {
+        "phylo_model": "c5094cc6b586b8956bb07fa840a80ac5",
+        "aln_fasta": "af05ff165123898fb0a665c81058f3d0",
+        "seq_info": "a5e2bcaf47b705861dd7fd1e7fdc78bb",
+        "taxonomy": "489fd5edff0dfe48cad8928eb51cb39c",
+        "tree": "c72f92e6a863fb3b38e92c30379ff1f9",
+        "tree_stats": "1efb5d5c6b418b55e19dc2d3bfc89bd9"
+    },
+    "log": [
+        "Rerooted",
+        "Stripped refpkg (removed 0 files)",
+        "Loaded initial files into empty refpkg"
+    ],
+    "rollback": {
+        "metadata": {
+            "create_date": "2025-12-15 10:11:14",
+            "format_version": "1.1",
+            "locus": "18S"
+        },
+        "files": {
+            "phylo_model": "phylo_modely55cu6u8.json",
+            "aln_fasta": "Obazoa.aln",
+            "seq_info": "Obazoa.seq_info",
+            "taxonomy": "Obazoa.tax",
+            "tree": "Obazoa.tre",
+            "tree_stats": "Obazoa.info"
+        },
+        "md5": {
+            "phylo_model": "c5094cc6b586b8956bb07fa840a80ac5",
+            "aln_fasta": "af05ff165123898fb0a665c81058f3d0",
+            "seq_info": "a5e2bcaf47b705861dd7fd1e7fdc78bb",
+            "taxonomy": "489fd5edff0dfe48cad8928eb51cb39c",
+            "tree": "c9efced9d5c8dec8b494feb26f5bee95",
+            "tree_stats": "1efb5d5c6b418b55e19dc2d3bfc89bd9"
+        },
+        "rollback": null
+    },
+    "rollforward": null
+}
