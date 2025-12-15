@@ -1,4 +1,4 @@
-"""P10K SSU Screening Tool
+"""CSI-SSU
 
 A command-line tool for screening SSU sequences in genomic and transcriptomic data.
 """

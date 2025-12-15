@@ -1,4 +1,4 @@
-"""Snakemake runner for P10K SSU screening tool."""
+"""Snakemake runner for CSI-SSU screening tool."""
 
 import os
 import sys

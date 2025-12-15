@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Command-line interface for P10K SSU screening tool."""
+"""Command-line interface for CSI-SSU screening tool."""
 
 import argparse
 import sys
@@ -11,12 +11,12 @@ from . import __version__
 def create_parser():
     """Create and configure argument parser."""
     parser = argparse.ArgumentParser(
-        prog='p10k-ssu-screen',
-        description='SSU screening tool for P10K project genomic and transcriptomic data',
+        prog='csi-ssu',
+        description='CSI-SSU screening tool for genomic and transcriptomic data',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  p10k-ssu-screen input.fasta -o results/ -t 8 --supergroup Amoebozoa
+  csi-ssu input.fasta -o results/ -t 8 --supergroup Amoebozoa
         """
     )
     

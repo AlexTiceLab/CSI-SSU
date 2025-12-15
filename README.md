@@ -1,6 +1,6 @@
-# P10K SSU Screening Tool
+# CSI-SSU
 
-A command-line tool for screening SSU (Small Subunit ribosomal RNA) sequences in genomic and transcriptomic data. This tool is part of the P10K project and helps identify and classify SSU sequences using phylogenetic placement methods.
+A command-line tool for screening SSU (Small Subunit ribosomal RNA) sequences in genomic and transcriptomic data. This tool helps identify and classify SSU sequences using phylogenetic placement methods.
 
 ## Features
 
@@ -15,13 +15,13 @@ A command-line tool for screening SSU (Small Subunit ribosomal RNA) sequences in
 
 ### From PyPI (when published)
 ```bash
-pip install p10k-ssu-screening-tool
+pip install csi-ssu
 ```
 
 ### From Source
 ```bash
-git clone https://github.com/AlexTiceLab/P10K-SSU-screening-tool.git
-cd P10K-SSU-screening-tool
+git clone https://github.com/AlexTiceLab/CSI-SSU.git
+cd CSI-SSU
 pip install -e .
 ```
 
@@ -45,13 +45,13 @@ conda install -c bioconda blast mafft pplacer snakemake-minimal
 ### Basic Usage
 ```bash
 # Run screening on FASTA file with taxonomy information
-p10k-ssu-screen input_sequences.fasta taxonomy_info.txt
+csi-ssu input_sequences.fasta taxonomy_info.txt
 
 # Specify output directory and number of threads
-p10k-ssu-screen input_sequences.fasta taxonomy_info.txt -o results/ -t 8
+csi-ssu input_sequences.fasta taxonomy_info.txt -o results/ -t 8
 
 # Run only 18S analysis
-p10k-ssu-screen --18s-only input_sequences.fasta taxonomy_info.txt
+csi-ssu --18s-only input_sequences.fasta taxonomy_info.txt
 ```
 
 ## Command-Line Options
@@ -66,8 +66,6 @@ optional arguments:
   --version            show program's version number and exit
   -o, --output-dir     Output directory (default: screening_tool_output)
   -t, --threads        Number of threads to use (default: 1)
-  --18s-only           Run only 18S SSU screening
-  --16s-only           Run only 16S SSU screening
   --dry-run            Show what would be run without executing
 ```
 
@@ -117,28 +115,28 @@ screening_tool_output/
 
 ### Example 1: Basic Screening
 ```bash
-p10k-ssu-screen genome_assembly.fasta taxonomy.txt
+csi-ssu genome_assembly.fasta taxonomy.txt
 ```
 
 ### Example 2: Multi-threaded Analysis
 ```bash
-p10k-ssu-screen transcriptome.fasta taxonomy.txt -o ssu_results -t 16 -v
+csi-ssu transcriptome.fasta taxonomy.txt -o ssu_results -t 16 -v
 ```
 
 ### Example 3: 18S-only Analysis
 ```bash
-p10k-ssu-screen eukaryotic_samples.fasta taxonomy.txt --18s-only -o euk_ssu
+csi-ssu eukaryotic_samples.fasta taxonomy.txt --18s-only -o euk_ssu
 ```
 
 ### Example 4: Dry Run (Check What Would Execute)
 ```bash
-p10k-ssu-screen input.fasta taxonomy.txt --dry-run -v
+csi-ssu input.fasta taxonomy.txt --dry-run -v
 ```
 
 
 ### Getting Help
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/AlexTiceLab/P10K-SSU-screening-tool/issues)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/AlexTiceLab/CSI-SSU/issues)
 - **Dry run**: Use `--dry-run` to see what commands would be executed
 
 ## License
