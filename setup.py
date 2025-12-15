@@ -26,13 +26,13 @@ setup(
     # Command-line entry point
     entry_points={
         'console_scripts': [
-            'csi-ssu=csi_ssu_screening.cli:main',
+            'csi-ssu=csi_ssu.cli:main',
         ],
     },
     
     # Include data files
     package_data={
-        'csi_ssu_screening': [
+        'csi_ssu': [
             'workflows/*.smk',
             'data/reference_packages/**/*',
             'data/queries/*',
