@@ -13,7 +13,7 @@ input_basename = os.path.splitext(os.path.basename(in_fasta))[0]
 
 def choose_targets(wildcards=None):
     ck = checkpoints.parse_blast.get()
-    parsed = ck.output.fasta
+    parsed = ck.output.pplacer_fasta
 
     # Wait briefly for the checkpoint output to be available
     wait_seconds = 20

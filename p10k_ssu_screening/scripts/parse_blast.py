@@ -23,9 +23,12 @@ def parse_blast_results(blast_results_file, input_fasta_file,
     # Store extracted sequences (longest kept)
     sequences = {}
 
-    # Store strand orientation for each sseqid
-    # True = reverse complement needed
-    sstrand_dict = {}
+    # Store strand orientation per HSP and HSP ranges per sseqid
+    # Each entry is a dict: {'start': int, 'end': int, 'is_reverse': bool}
+    s_hsps = {}
+
+    # Maximum allowed extracted sequence length (bp)
+    MAX_EXTRACT_LEN = 2500
 
     # --------------------------
     # 1. FIRST PASS: Parse BLAST
@@ -48,7 +51,17 @@ def parse_blast_results(blast_results_file, input_fasta_file,
 
             # Determine strand: BLAST rule → reverse if sstart > send
             is_reverse = sstart > send
-            sstrand_dict[sseqid] = is_reverse
+
+            # Normalize HSP coordinates to forward orientation
+            hsp_start = min(sstart, send)
+            hsp_end = max(sstart, send)
+            if sseqid not in s_hsps:
+                s_hsps[sseqid] = []
+            s_hsps[sseqid].append({
+                'start': hsp_start,
+                'end': hsp_end,
+                'is_reverse': is_reverse,
+            })
 
             # Merge HSP regions on subject coordinates
             if sseqid not in sregions:
@@ -77,10 +90,67 @@ def parse_blast_results(blast_results_file, input_fasta_file,
             continue  # Subject not found in FASTA
 
         full_seq = fasta_records[sseqid].seq
+        # Ensure coordinates are within the sequence bounds
+        seq_len = len(full_seq)
+        if start < 1:
+            start = 1
+        if end > seq_len:
+            end = seq_len
+
+        # Determine orientation consistency between the HSP that defines
+        # the merged `start` and the HSP that defines the merged `end`.
+        # If they come from different HSPs with differing orientations,
+        # skip this subject.
+        region_is_reverse = False
+        hsp_list = s_hsps.get(sseqid, [])
+        if not hsp_list:
+            continue
+
+        # Find HSPs that contain the merged start/end (or whose boundary equals them)
+        start_hsp = next((h for h in hsp_list if h['start'] <= start <= h['end']), None)
+        end_hsp = next((h for h in hsp_list if h['start'] <= end <= h['end']), None)
+
+        if start_hsp is None or end_hsp is None:
+            # As a fallback, try matching exact boundary values
+            start_hsp = next((h for h in hsp_list if h['start'] == start), start_hsp)
+            end_hsp = next((h for h in hsp_list if h['end'] == end), end_hsp)
+
+        if start_hsp is None or end_hsp is None:
+            # Can't determine contributing HSPs reliably; skip
+            continue
+
+        if start_hsp is end_hsp or start_hsp['is_reverse'] == end_hsp['is_reverse']:
+            region_is_reverse = start_hsp['is_reverse']
+        else:
+            # Start and end come from HSPs with different orientations: skip
+            continue
+
+        # If extraction is too long, try stepping `end` down to the next
+        # BLAST HSP `send` coordinates (descending). If none of the HSP
+        # ends produce a short enough region, exclude the region.
+        if (end - start + 1) > MAX_EXTRACT_LEN:
+            candidate_ends = sorted(set(h['end'] for h in hsp_list))
+            # consider only ends smaller than current merged end
+            candidates = [e for e in candidate_ends if e < end]
+            trimmed = False
+            for c in sorted(candidates, reverse=True):
+                if (c - start + 1) <= MAX_EXTRACT_LEN:
+                    end = c
+                    trimmed = True
+                    break
+
+            if not trimmed:
+                # no HSP end shrank it enough; exclude this region
+                continue
+
+        # If trimming removed the entire region, skip
+        if end <= start:
+            continue
+
         extracted = full_seq[start-1:end]
 
-        # Reverse complement if BLAST indicates minus strand
-        if sstrand_dict.get(sseqid, False):
+        # Reverse complement according to the region orientation
+        if region_is_reverse:
             extracted = extracted.reverse_complement()
 
         # Keep the longest extraction per id

@@ -194,6 +194,33 @@ def get_taxonomic_hierarchy(db_path, reference_package_dir=None):
                 hierarchy = '|'.join([part if part else 'Uncertain' for part in hierarchy.split('|')])
                 taxonomic_info[name] = hierarchy
             
+            # Handle sequences that don't have the expected taxonomy ranks
+            # Get all placed sequences and add fallback taxonomy for those not already captured
+            cursor.execute('SELECT DISTINCT name FROM placement_names')
+            all_placed = cursor.fetchall()
+            
+            for (name,) in all_placed:
+                if name not in taxonomic_info:
+                    # Try to get the best available taxonomy (domain level or below)
+                    cursor.execute('''
+                    SELECT t.tax_name, t.rank
+                    FROM placement_names pn
+                    JOIN multiclass mc ON pn.placement_id = mc.placement_id
+                    JOIN taxa t ON mc.tax_id = t.tax_id
+                    WHERE pn.name = ?
+                    AND t.rank NOT IN ('root', 'below_root')
+                    ORDER BY mc.likelihood DESC
+                    LIMIT 1
+                    ''', (name,))
+                    
+                    fallback_row = cursor.fetchone()
+                    if fallback_row:
+                        taxon, rank = fallback_row
+                        taxonomic_info[name] = f"Uncertain|Uncertain|Uncertain|Uncertain ({taxon} at {rank} level)"
+                    else:
+                        taxonomic_info[name] = "Uncertain|Uncertain|Uncertain|Uncertain (no detailed classification)"
+                    print(f"  Added fallback taxonomy for {name}: {taxonomic_info[name]}")
+            
             conn.close()
             print(f"Retrieved taxonomic hierarchy for {len(taxonomic_info)} placed sequences from database")
             
