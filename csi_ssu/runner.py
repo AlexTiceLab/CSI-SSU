@@ -9,24 +9,59 @@ from pathlib import Path
 class SnakemakeRunner:
     """Handles execution of Snakemake workflows for SSU screening."""
     
-    def __init__(self, fasta, output_dir, supergroup, threads=1, 
-                 dry_run=False, pplacer_cutoff_length=200):
+    def __init__(self, fasta, output_dir, supergroup, threads, 
+                 dry_run, pplacer_cutoff_length, busco_mode, 
+                 workflow_mode='full', skip_retrieval=False):
         """Initialize the runner with configuration parameters."""
-        self.fasta = os.path.abspath(fasta)
-        self.output_dir = os.path.abspath(output_dir)
+        self.fasta = fasta
+        self.output_dir = output_dir
         self.supergroup = supergroup
         self.threads = threads
         self.dry_run = dry_run
         self.pplacer_cutoff_length = pplacer_cutoff_length
+        self.busco_mode = busco_mode
+        self.workflow_mode = workflow_mode
+        self.skip_retrieval = skip_retrieval
+        
+        # Auto-detect if SSU sequences already exist and skip retrieval if so
+        self._auto_detect_existing_sequences()
         
         # Get the Snakefile path using a simple file system approach
         self.snakefile_path = self._get_snakefile_path()
     
+    def _auto_detect_existing_sequences(self):
+        """
+        Auto-detect if SSU sequences have already been extracted.
+        If found, automatically use them and skip retrieval to save resources.
+        """
+        # Only check if we're in full mode and not explicitly told to skip
+        if self.workflow_mode == 'full' and not self.skip_retrieval:
+            # Check for existing parsed sequences in the output directory
+            parsed_fasta = Path(self.output_dir) / 'parsed_blast' / 'parsed_sequences_for_pplacer.fasta'
+            
+            if parsed_fasta.exists():
+                # Check if file has content (at least one sequence)
+                try:
+                    with open(parsed_fasta, 'r') as f:
+                        has_sequences = any(line.startswith('>') for line in f)
+                    
+                    if has_sequences:
+                        print(f"Note: Found existing SSU sequences at {parsed_fasta}")
+                        print("      Skipping retrieval step to save computational resources.")
+                        print("      Using existing sequences for phylogenetic placement.")
+                        self.skip_retrieval = True
+                        self.existing_ssu_file = str(parsed_fasta.resolve())
+                except Exception:
+                    # If we can't read the file, don't skip retrieval
+                    pass
+    
     def _get_snakefile_path(self):
         """Get the path to the Snakemake workflow file."""
-        # Look for the Snakefile relative to this module
+        # Use screening.smk for all modes - it handles all workflows
         current_dir = Path(__file__).parent
-        snakefile_path = current_dir / 'workflows' / 'screening.smk'
+        workflow_file = 'screening.smk'
+            
+        snakefile_path = current_dir / 'workflows' / workflow_file
 
         if snakefile_path.exists():
             return str(snakefile_path.resolve())
@@ -36,9 +71,6 @@ class SnakemakeRunner:
     def make_config(self):
         """
         Make config list to be passed to Snakemake.
-        
-        Args:
-            eighteen_s (bool): Whether to use 18S configuration
             
         Returns:
             str: Space-separated config string for Snakemake
@@ -48,19 +80,35 @@ class SnakemakeRunner:
         # Use the required supergroup parameter
         supergroup_of_interest = self.supergroup
 
-        ref_pckg = current_dir / 'data' / 'reference_packages' / f'{supergroup_of_interest}.refpkg'
-        query_file = current_dir / 'data' / 'queries' / 'pr2_version_5.1.0_18S_divisions_query.fasta'
-        ref_aln = ref_pckg / f'{supergroup_of_interest}.aln'
+        ref_pckg = f'{current_dir}/data/reference_packages/{supergroup_of_interest}.refpkg'
+        query_file = f'{current_dir}/data/queries/pr2_version_5.1.0_18S_divisions_query.fasta'
+        ref_aln = f'{ref_pckg}/{supergroup_of_interest}.aln'
+        busco_downloads = f'{current_dir}/data/busco_downloads'
 
+        # Base config items
         config_items = [
-            f'in_fasta={self.fasta}',
             f'out_dir={self.output_dir}',
             f'ref_pckg={ref_pckg}',
-            f'query_fasta={query_file}',
             f'ref_aln={ref_aln}',
             f'supergroup_of_interest={supergroup_of_interest}',
-            f'pplacer_cutoff_length={self.pplacer_cutoff_length}'
+            f'pplacer_cutoff_length={self.pplacer_cutoff_length}',
+            f'busco_mode={self.busco_mode}',
+            f'busco_downloads={busco_downloads}',
+            f'in_fasta={self.fasta}',
+            f'query_fasta={query_file}',
+            f'workflow_mode={self.workflow_mode}',
         ]
+        
+        # Add mode-specific config
+        if self.workflow_mode == 'placement' or self.skip_retrieval:
+            # For placement mode or when skipping retrieval
+            ssu_file = getattr(self, 'existing_ssu_file', self.fasta)
+            config_items.extend([
+                f'skip_retrieval=True',
+                f'ssu_input={ssu_file}',
+            ])
+        else:
+            config_items.append(f'skip_retrieval=False')
 
         return ' '.join(config_items)
     
