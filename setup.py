@@ -36,6 +36,7 @@ setup(
             'workflows/*.smk',
             'data/reference_packages/**/*',
             'data/queries/*',
+            'busco_downloads/',
         ],
     },
     include_package_data=True,
