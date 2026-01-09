@@ -163,12 +163,20 @@ def get_taxonomic_hierarchy(db_path, reference_package_dir=None):
             cursor = conn.cursor()
             
             # Get all sequences and their complete taxonomic hierarchy
+            # For each sequence and rank, select only the classification with highest likelihood
             cursor.execute('''
-            SELECT DISTINCT pn.name, t.tax_name, t.rank
+            SELECT pn.name, t.tax_name, t.rank
             FROM placement_names pn
             JOIN multiclass mc ON pn.placement_id = mc.placement_id
             JOIN taxa t ON mc.tax_id = t.tax_id
             WHERE t.rank IN ('supergroup', 'division', 'order', 'family', 'genus')
+            AND mc.likelihood = (
+                SELECT MAX(mc2.likelihood)
+                FROM multiclass mc2
+                JOIN placement_names pn2 ON mc2.placement_id = pn2.placement_id
+                JOIN taxa t2 ON mc2.tax_id = t2.tax_id
+                WHERE pn2.name = pn.name AND t2.rank = t.rank
+            )
             ORDER BY pn.name, 
                      CASE t.rank 
                          WHEN 'supergroup' THEN 1
@@ -176,20 +184,28 @@ def get_taxonomic_hierarchy(db_path, reference_package_dir=None):
                          WHEN 'order' THEN 3
                          WHEN 'family' THEN 4
                          WHEN 'genus' THEN 5
-                     END
+                     END, mc.likelihood DESC
             ''')
             
             rows = cursor.fetchall()
             
             # Build hierarchy for placed sequences
+            # Query is ordered by name and rank hierarchy, so multiple taxa at same rank will be consecutive
+            # We need to track which ranks we've seen for each sequence to keep only the highest likelihood
             for name, taxon, rank in rows:
                 if name not in placed_tax_info:
-                    placed_tax_info[name] = {'supergroup': '', 'division': '', 'order': '', 'family': '', 'genus': ''}
-                placed_tax_info[name][rank] = taxon
+                    placed_tax_info[name] = {
+                        'supergroup': '', 'division': '', 'order': '', 'family': '', 'genus': '',
+                        '_seen_ranks': set()  # Track which ranks we've already filled
+                    }
+                # Only set the taxon if we haven't seen this rank yet (first = highest likelihood)
+                if rank not in placed_tax_info[name]['_seen_ranks']:
+                    placed_tax_info[name][rank] = taxon
+                    placed_tax_info[name]['_seen_ranks'].add(rank)
             
             # Convert to hierarchy strings for placed sequences (supergroup|division|order|family)
             for name, taxa in placed_tax_info.items():
-                hierarchy = f"{taxa['supergroup']}|{taxa['division']}|{taxa['order']}|{taxa['family']}"
+                hierarchy = f"{taxa.get('supergroup', '')}|{taxa.get('division', '')}|{taxa.get('order', '')}|{taxa.get('family', '')}"
                 # Clean up empty fields
                 hierarchy = '|'.join([part if part else 'Uncertain' for part in hierarchy.split('|')])
                 taxonomic_info[name] = hierarchy
@@ -378,14 +394,21 @@ def get_placed_sequences(db_path):
             ORDER BY pn.name, mc.likelihood DESC
             ''')
             
-            # Get supergroup-level likelihoods for placed sequences
+            # Get supergroup-level likelihoods for placed sequences (only highest likelihood)
             cursor.execute('''
             SELECT pn.name, mc.likelihood
             FROM placement_names pn
             JOIN multiclass mc ON pn.placement_id = mc.placement_id
             JOIN taxa t ON mc.tax_id = t.tax_id
             WHERE mc.want_rank = 'supergroup' AND mc.rank = 'supergroup'
-            ORDER BY pn.name, mc.likelihood DESC
+            AND mc.likelihood = (
+                SELECT MAX(mc2.likelihood)
+                FROM multiclass mc2
+                JOIN placement_names pn2 ON mc2.placement_id = pn2.placement_id
+                JOIN taxa t2 ON mc2.tax_id = t2.tax_id
+                WHERE pn2.name = pn.name AND mc2.want_rank = 'supergroup' AND t2.rank = 'supergroup'
+            )
+            ORDER BY pn.name
             ''')
             
             supergroup_rows = cursor.fetchall()
@@ -393,14 +416,21 @@ def get_placed_sequences(db_path):
                 if name not in supergroup_likelihoods:
                     supergroup_likelihoods[name] = likelihood
             
-            # Get division-level likelihoods for placed sequences
+            # Get division-level likelihoods for placed sequences (only highest likelihood)
             cursor.execute('''
             SELECT pn.name, mc.likelihood
             FROM placement_names pn
             JOIN multiclass mc ON pn.placement_id = mc.placement_id
             JOIN taxa t ON mc.tax_id = t.tax_id
             WHERE mc.want_rank = 'division' AND mc.rank = 'division'
-            ORDER BY pn.name, mc.likelihood DESC
+            AND mc.likelihood = (
+                SELECT MAX(mc2.likelihood)
+                FROM multiclass mc2
+                JOIN placement_names pn2 ON mc2.placement_id = pn2.placement_id
+                JOIN taxa t2 ON mc2.tax_id = t2.tax_id
+                WHERE pn2.name = pn.name AND mc2.want_rank = 'division' AND t2.rank = 'division'
+            )
+            ORDER BY pn.name
             ''')
             
             division_rows = cursor.fetchall()
@@ -408,14 +438,21 @@ def get_placed_sequences(db_path):
                 if name not in division_likelihoods:
                     division_likelihoods[name] = likelihood
             
-            # Also get order-level likelihoods for placed sequences
+            # Get order-level likelihoods for placed sequences (only highest likelihood)
             cursor.execute('''
             SELECT pn.name, mc.likelihood
             FROM placement_names pn
             JOIN multiclass mc ON pn.placement_id = mc.placement_id
             JOIN taxa t ON mc.tax_id = t.tax_id
             WHERE mc.want_rank = 'order' AND mc.rank = 'order'
-            ORDER BY pn.name, mc.likelihood DESC
+            AND mc.likelihood = (
+                SELECT MAX(mc2.likelihood)
+                FROM multiclass mc2
+                JOIN placement_names pn2 ON mc2.placement_id = pn2.placement_id
+                JOIN taxa t2 ON mc2.tax_id = t2.tax_id
+                WHERE pn2.name = pn.name AND mc2.want_rank = 'order' AND t2.rank = 'order'
+            )
+            ORDER BY pn.name
             ''')
             
             order_rows = cursor.fetchall()
