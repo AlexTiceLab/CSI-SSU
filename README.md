@@ -41,12 +41,12 @@ positional arguments:
   fasta                      Input FASTA file path (genome/transcriptome or pre-extracted SSU sequences)
 
 required arguments:
-  --supergroup SUPERGROUP    Supergroup of interest (e.g., Amoebozoa, Excavata, TSAR, Archaeplastida, Cryptista, Haptista, CRuMs, Provora, Obazoa)
+  --supergroup SUPERGROUP    Supergroup of interest (Amoebozoa, Excavata, TSAR, Archaeplastida, Cryptista, Haptista, CRuMs, Provora, Obazoa)
 
 optional arguments:
   -h, --help                 show this help message and exit
   --version                  show program's version number and exit
-  --data-type DATA_TYPE      Data type (genome or transcriptome). Required for retrieval mode, optional for placement-only mode
+  --data-type DATA_TYPE      {genome, transcriptome} for full or retrieval mode. {pre_collected_ssus} for placement-only mode.
   --mode {full,retrieval,placement}
                              Workflow mode: full (both parts), retrieval (SSU extraction + BUSCO), placement (phylogenetic placement only) (default: full)
   -o, --output-dir           Output directory (default: screening_tool_output)
@@ -59,7 +59,7 @@ optional arguments:
 
 ### FASTA File
 Standard FASTA format containing sequences to be screened:
-- For retrieval mode: genome assembly or transcriptome sequences
+- For full run or retrieval mode: genome assembly or transcriptome sequences
 - For placement mode: pre-extracted SSU sequences
 
 ```
@@ -68,6 +68,10 @@ ATCGATCGATCGATCG...
 >sequence2
 GCTAGCTAGCTAGCTA...
 ```
+
+## Workflow
+
+![CSI-SSU Workflow](assets/CSI-SSU_Workflow_Figure.png)
 
 ## Output
 
