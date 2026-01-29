@@ -727,7 +727,7 @@ def plot_tree_ete3(tree_file, output_file, db_path=None, supergroup_of_interest=
     
     # Add legend
     if supergroup_of_interest:
-        legend_text = f"Tree rooted with {supergroup_of_interest} as ingroup\nBlack/Bold: Placed sequences ({len(placed_sequences)})\nBlack: Reference sequences ({num_taxa - len(placed_sequences)})"
+        legend_text = f"Tree is midpoint rooted\nBlack/Bold: Placed sequences ({len(placed_sequences)})\nBlack: Reference sequences ({num_taxa - len(placed_sequences)})"
     else:
         legend_text = f"Black/Bold: Placed sequences ({len(placed_sequences)})\nBlack: Reference sequences ({num_taxa - len(placed_sequences)})"
     legend_face = TextFace(legend_text, fsize=10)
