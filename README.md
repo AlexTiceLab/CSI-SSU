@@ -1,11 +1,11 @@
 # CSI-SSU
 
-A command-line tool for screening SSU (Small Subunit ribosomal RNA) sequences in genomic and transcriptomic data. This tool helps identify and classify SSU sequences using phylogenetic placement via pplacer.
+A command-line tool for screening SSU (Small Subunit ribosomal RNA) sequences in genomic and transcriptomic data. This tool helps identify and classify SSU sequences using phylogenetic placement in SSU reference packages built from PR2 via pplacer.
 
 ## Features
 
 - **Automated SSU screening** using BLAST, MAFFT, and pplacer
-- **Phylogenetic placement** for accurate taxonomic classification
+- **Phylogenetic placement** for contamination screening and approximate taxonomic classification
 - **Command-line interface** for easy integration into pipelines
 - **Configurable parameters** for different analysis needs
 
@@ -48,7 +48,7 @@ optional arguments:
   --version                  show program's version number and exit
   --data-type DATA_TYPE      {genome, transcriptome} for full or retrieval mode. {pre_collected_ssus} for placement-only mode.
   --mode {full,retrieval,placement}
-                             Workflow mode: full (both parts), retrieval (SSU extraction + BUSCO), placement (phylogenetic placement only) (default: full)
+                             Workflow mode: full (both parts), retrieval (SSU extraction + BUSCO bacteria_odb12), placement (phylogenetic placement only) (default: full)
   -o, --output-dir           Output directory (default: screening_tool_output)
   --pplacer-cutoff-length    Cutoff length for pplacer (default: 500)
   -t, --threads              Number of threads to use (default: 1)
@@ -80,7 +80,7 @@ The tool creates a structured output directory with contents depending on the wo
 ```
 screening_tool_output/
 ├── logs/              # Log files for each workflow step
-├── busco/             # BUSCO contamination screening results (retrieval/full mode)
+├── busco/             # BUSCO bacteria_odb12 contamination screening results (retrieval/full mode)
 ├── blast_db/          # BLAST database files (retrieval/full mode)
 ├── blast/             # BLAST search results (retrieval/full mode)
 ├── parsed_blast/      # Parsed and filtered SSU sequences (retrieval/full mode)
@@ -98,7 +98,7 @@ screening_tool_output/
 - **sequence_classifications.csv**: Individual sequence classifications with taxonomic assignments
 - **rank_counts.csv**: Detailed counts for each taxonomic rank
 - **placement_tree.pdf**: Visualization of phylogenetic tree with sequence placements
-- **busco_summary.txt**: Copy of BUSCO contamination screening results (if retrieval was run)
+- **busco_summary.txt**: Copy of BUSCO bacteria_odb12 contamination screening results (if retrieval was run)
 
 **In `parsed_blast/` directory (retrieval/full mode):**
 - **parsed_sequences.fasta**: All extracted SSU sequences
@@ -109,7 +109,7 @@ screening_tool_output/
 - **placement.jplace**: Phylogenetic placement results in JSON format
 
 **In `busco/` directory (retrieval/full mode):**
-- **short_summary.specific.bacteria_odb12.busco.txt**: BUSCO contamination assessment
+- **short_summary.specific.bacteria_odb12.busco.txt**: BUSCO bacteria_odb12 contamination assessment
 
 ## Examples
 
