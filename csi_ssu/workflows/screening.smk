@@ -172,7 +172,7 @@ if run_retrieval:
         params:
             pplacer_cutoff_length = pplacer_cutoff_length
         log:
-            f'{out_dir}/logs/parse_blast/parse_blast.log'
+            f'{out_dir}/logs/parse_blast.log'
         shell:
             '''
             mkdir -p {out_dir}/parsed_blast
@@ -239,7 +239,7 @@ rule guppy:
     shell:
         '''
         guppy classify -c {params.refpkg} --sqlite {input.db} {input.jplace} &> {log}
-        guppy tog -o {output} {input.jplace} &>> {log}
+        guppy tog -o {output} {input.jplace} >> {log} 2>> {log}
         '''
 
 rule summarize:
@@ -263,10 +263,10 @@ rule summarize:
         shell('''
         mkdir -p {out_dir}/summary
         python3 {workflow.basedir}/../scripts/summarize_results.py {input.rppr} {output.taxonomy_summary} {output.sequence_classifications} {output.rank_counts} {input_basename} &> {log}
-        python3 {workflow.basedir}/../scripts/plot_tree.py {input.guppy} {output.tree_pdf} {input.rppr} {params.supergroup} "" {input.parsed} &>> {log}
+        python3 {workflow.basedir}/../scripts/plot_tree.py {input.guppy} {output.tree_pdf} {input.rppr} {params.supergroup} "" {input.parsed} >> {log} 2>> {log}
         ''')
         if run_retrieval:
-            shell('cp {params.busco_file} {output.busco_summary} &>> {log}')
+            shell('cp {params.busco_file} {output.busco_summary} >> {log} 2>> {log}')
         else:
             shell('echo "BUSCO not run - skipped retrieval" > {output.busco_summary}')
 
