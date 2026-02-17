@@ -1,24 +1,24 @@
 {
     "metadata": {
-        "create_date": "2025-12-15 10:11:14",
+        "create_date": "2026-02-17 10:23:34",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_modely55cu6u8.json",
+        "phylo_model": "phylo_modelgill8uln.json",
         "aln_fasta": "Obazoa.aln",
         "seq_info": "Obazoa.seq_info",
         "taxonomy": "Obazoa.tax",
-        "tree": "tree7zvdesw4.tre",
+        "tree": "treeye1wpub5.tre",
         "tree_stats": "Obazoa.info"
     },
     "md5": {
-        "phylo_model": "c5094cc6b586b8956bb07fa840a80ac5",
-        "aln_fasta": "af05ff165123898fb0a665c81058f3d0",
+        "phylo_model": "27b64d8e017bb6d55d738c791e9caa42",
+        "aln_fasta": "c7bb93ffd5d7f866b79ff5029eac1410",
         "seq_info": "a5e2bcaf47b705861dd7fd1e7fdc78bb",
         "taxonomy": "489fd5edff0dfe48cad8928eb51cb39c",
-        "tree": "c72f92e6a863fb3b38e92c30379ff1f9",
-        "tree_stats": "1efb5d5c6b418b55e19dc2d3bfc89bd9"
+        "tree": "2fc0d357b0a27b2a7ec53d65db106fe3",
+        "tree_stats": "4aa18a5a1fc6a8b396b916a683925f66"
     },
     "log": [
         "Rerooted",
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-15 10:11:14",
+            "create_date": "2026-02-17 10:23:34",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_modely55cu6u8.json",
+            "phylo_model": "phylo_modelgill8uln.json",
             "aln_fasta": "Obazoa.aln",
             "seq_info": "Obazoa.seq_info",
             "taxonomy": "Obazoa.tax",
@@ -40,12 +40,12 @@
             "tree_stats": "Obazoa.info"
         },
         "md5": {
-            "phylo_model": "c5094cc6b586b8956bb07fa840a80ac5",
-            "aln_fasta": "af05ff165123898fb0a665c81058f3d0",
+            "phylo_model": "27b64d8e017bb6d55d738c791e9caa42",
+            "aln_fasta": "c7bb93ffd5d7f866b79ff5029eac1410",
             "seq_info": "a5e2bcaf47b705861dd7fd1e7fdc78bb",
             "taxonomy": "489fd5edff0dfe48cad8928eb51cb39c",
-            "tree": "c9efced9d5c8dec8b494feb26f5bee95",
-            "tree_stats": "1efb5d5c6b418b55e19dc2d3bfc89bd9"
+            "tree": "7cc6221da5782c9a331a62a957074d28",
+            "tree_stats": "4aa18a5a1fc6a8b396b916a683925f66"
         },
         "rollback": null
     },

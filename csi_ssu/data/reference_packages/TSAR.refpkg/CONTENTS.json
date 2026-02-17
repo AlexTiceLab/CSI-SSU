@@ -1,24 +1,24 @@
 {
     "metadata": {
-        "create_date": "2025-12-12 09:59:43",
+        "create_date": "2026-02-10 14:23:34",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_model5x6jop6m.json",
+        "phylo_model": "phylo_modela4szdsl7.json",
         "aln_fasta": "TSAR.aln",
         "seq_info": "TSAR.seq_info",
         "taxonomy": "TSAR.tax",
-        "tree": "treeky3mqrvy.tre",
+        "tree": "tree6ucr7665.tre",
         "tree_stats": "TSAR.info"
     },
     "md5": {
-        "phylo_model": "7612958ba6c361d15f36df5f899cb55b",
-        "aln_fasta": "40d9f24169b1f61c273bde58f8283d9e",
+        "phylo_model": "eb77aa342e19b96ec2e0729ee890aec9",
+        "aln_fasta": "a6b8d967bf21783ed45ebebf30192c42",
         "seq_info": "cb2b9523ab8bdbb7f58a832871cd4fec",
         "taxonomy": "0cf2952cdfed82cde3aa3f9ac4ad8540",
-        "tree": "6c68988945fc7cff286f322785445d3d",
-        "tree_stats": "abf17cc15bf3b859fc8aea7317696914"
+        "tree": "f323ddf89d67deab6281faab0bed8a7d",
+        "tree_stats": "a8e24dc367a1e6f19b1dc302409868f3"
     },
     "log": [
         "Rerooted",
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-12 09:59:43",
+            "create_date": "2026-02-10 14:23:34",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_model5x6jop6m.json",
+            "phylo_model": "phylo_modela4szdsl7.json",
             "aln_fasta": "TSAR.aln",
             "seq_info": "TSAR.seq_info",
             "taxonomy": "TSAR.tax",
@@ -40,12 +40,12 @@
             "tree_stats": "TSAR.info"
         },
         "md5": {
-            "phylo_model": "7612958ba6c361d15f36df5f899cb55b",
-            "aln_fasta": "40d9f24169b1f61c273bde58f8283d9e",
+            "phylo_model": "eb77aa342e19b96ec2e0729ee890aec9",
+            "aln_fasta": "a6b8d967bf21783ed45ebebf30192c42",
             "seq_info": "cb2b9523ab8bdbb7f58a832871cd4fec",
             "taxonomy": "0cf2952cdfed82cde3aa3f9ac4ad8540",
-            "tree": "0925298f7cc30e9ae7b4924ae04633f4",
-            "tree_stats": "abf17cc15bf3b859fc8aea7317696914"
+            "tree": "b194dbb90781c6810ecc50533235604c",
+            "tree_stats": "a8e24dc367a1e6f19b1dc302409868f3"
         },
         "rollback": null
     },

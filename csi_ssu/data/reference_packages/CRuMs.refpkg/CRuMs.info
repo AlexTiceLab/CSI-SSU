@@ -1,87 +1,180 @@
 
-You are using a proportion of Invariable sites estimate, although I don't
-like it. The likelihood epsilon "-f e" will be automatically lowered to 0.001
-to avoid unfavorable effects caused by simultaneous optimization of alpha and P-Invar
+RAxML-NG v. 1.2.2 released on 11.04.2024 by The Exelixis Lab.
+Developed by: Alexey M. Kozlov and Alexandros Stamatakis.
+Contributors: Diego Darriba, Tomas Flouri, Benoit Morel, Sarah Lutteropp, Ben Bettisworth, Julia Haag, Anastasis Togkousidis.
+Latest version: https://github.com/amkozlov/raxml-ng
+Questions/problems/suggestions? Please visit: https://groups.google.com/forum/#!forum/raxml
+
+System: Intel(R) Xeon(R) CPU E5-2695 v4 @ 2.10GHz, 36 cores, 188 GB RAM (allocated: 4 physical cores)
+
+RAxML-NG was called at 23-Jan-2026 10:25:24 as follows:
+
+raxml-ng --msa trimmed/CRuMs_gt07.aln --model GTR+G+I --prefix trees/CRuMs_gt07 --threads 8
+
+Analysis options:
+  run mode: ML tree search
+  start tree(s): random (10) + parsimony (10)
+  random seed: 1769185524
+  tip-inner: OFF
+  pattern compression: ON
+  per-rate scalers: OFF
+  site repeats: ON
+  logLH epsilon: general: 10.000000, brlen-triplet: 1000.000000
+  fast spr radius: AUTO
+  spr subtree cutoff: 1.000000
+  fast CLV updates: ON
+  branch lengths: proportional (ML estimate, algorithm: NR-FAST)
+  SIMD kernels: AVX2
+  parallelization: coarse-grained (auto), PTHREADS (8 threads), thread pinning: OFF
+
+[00:00:00] Reading alignment from file: trimmed/CRuMs_gt07.aln
+[00:00:00] Loaded alignment with 702 taxa and 1597 sites
+
+WARNING: Sequences AM490840.1.1813_U and X75520.1.2336_G are exactly identical!
+WARNING: Duplicate sequences found: 1
+
+NOTE: Reduced alignment (with duplicates and gap-only sites/taxa removed) 
+NOTE: was saved to: /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/CRuMs_gt07.raxml.reduced.phy
+
+Alignment comprises 1 partitions and 1597 patterns
+
+Partition 0: noname
+Model: GTR+FO+I+G4m
+Alignment sites / patterns: 1597 / 1597
+Gaps: 8.28 %
+Invariant sites: 0.38 %
 
 
-IMPORTANT WARNING: Sequences AM490840.1.1813_U and X75520.1.2336_G are exactly identical
+NOTE: Binary MSA file created: trees/CRuMs_gt07.raxml.rba
 
-IMPORTANT WARNING
-Found 1 sequence that is exactly identical to other sequences in the alignment.
-Normally they should be excluded from the analysis.
+Parallelization scheme autoconfig: 8 worker(s) x 1 thread(s)
 
-An alignment file with sequence duplicates removed has already
-been printed to file pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_CRuMs_EukClasses_gt07.aln.reduced
+[00:00:00] Generating 10 random starting tree(s) with 702 taxa
+[00:00:00] Generating 10 parsimony starting tree(s) with 702 taxa
+Parallel parsimony with 8 threads
+Parallel reduction/worker buffer size: 1 KB  / 0 KB
+
+[00:00:00] Data distribution: max. partitions/sites/weight per thread: 1 / 1597 / 25552
+[00:00:00] Data distribution: max. searches per worker: 3
+
+Starting ML tree search with 20 distinct starting trees
+
+[00:00:01 -535349.186159] Initial branch length optimization
+[00:00:02 -458698.548976] Model parameter optimization (eps = 10.000000)
+[00:00:58 -437063.161107] AUTODETECT spr round 1 (radius: 5)
+[00:01:12 -406497.302150] AUTODETECT spr round 2 (radius: 10)
+[00:01:50 -362198.855737] AUTODETECT spr round 3 (radius: 15)
+[00:02:52 -328923.817739] AUTODETECT spr round 4 (radius: 20)
+[00:04:25 -317766.231232] AUTODETECT spr round 5 (radius: 25)
+[00:06:42 -315862.843789] SPR radius for FAST iterations: 25 (autodetect)
+[00:06:42 -315862.843789] Model parameter optimization (eps = 3.000000)
+[00:07:10 -315081.551193] FAST spr round 1 (radius: 25)
+[00:09:52 -291102.365017] FAST spr round 2 (radius: 25)
+[00:11:23 -289984.639038] FAST spr round 3 (radius: 25)
+[00:12:24 -289895.720987] FAST spr round 4 (radius: 25)
+[00:13:07 -289883.193315] FAST spr round 5 (radius: 25)
+[00:13:42 -289872.621355] FAST spr round 6 (radius: 25)
+[00:14:11 -289863.203417] Model parameter optimization (eps = 1.000000)
+[00:14:24 -289819.671660] SLOW spr round 1 (radius: 5)
+[00:15:22 -289712.838681] SLOW spr round 2 (radius: 5)
+[00:16:11 -289704.076281] SLOW spr round 3 (radius: 10)
+[00:17:04 -289703.788754] SLOW spr round 4 (radius: 15)
+[00:19:57 -289703.784182] SLOW spr round 5 (radius: 20)
+[00:23:59 -289699.952920] SLOW spr round 6 (radius: 25)
+[00:27:21] [worker #5] ML tree search #6, logLikelihood: -289734.977305
+[00:28:13] [worker #7] ML tree search #8, logLikelihood: -289737.568543
+[00:28:15 -289699.949988] Model parameter optimization (eps = 0.100000)
+
+[00:28:20] [worker #0] ML tree search #1, logLikelihood: -289699.712253
+
+[00:28:20 -533923.788767] Initial branch length optimization
+[00:28:22 -459452.680185] Model parameter optimization (eps = 10.000000)
+[00:28:29] [worker #3] ML tree search #4, logLikelihood: -289730.265756
+[00:29:03 -437798.228380] AUTODETECT spr round 1 (radius: 5)
+[00:29:18 -401485.005161] AUTODETECT spr round 2 (radius: 10)
+[00:29:29] [worker #4] ML tree search #5, logLikelihood: -289751.254598
+[00:29:56 -352273.357087] AUTODETECT spr round 3 (radius: 15)
+[00:29:59] [worker #6] ML tree search #7, logLikelihood: -289742.477633
+[00:30:26] [worker #1] ML tree search #2, logLikelihood: -289703.933023
+[00:30:59] [worker #2] ML tree search #3, logLikelihood: -289739.545096
+[00:30:59 -323975.438054] AUTODETECT spr round 4 (radius: 20)
+[00:32:49 -309772.912757] AUTODETECT spr round 5 (radius: 25)
+[00:35:19 -308615.510367] SPR radius for FAST iterations: 25 (autodetect)
+[00:35:19 -308615.510367] Model parameter optimization (eps = 3.000000)
+[00:35:46 -307778.638348] FAST spr round 1 (radius: 25)
+[00:38:30 -290507.953463] FAST spr round 2 (radius: 25)
+[00:39:59 -289855.582426] FAST spr round 3 (radius: 25)
+[00:40:59 -289807.316640] FAST spr round 4 (radius: 25)
+[00:41:42 -289800.948250] Model parameter optimization (eps = 1.000000)
+[00:42:00 -289780.131852] SLOW spr round 1 (radius: 5)
+[00:43:02 -289707.924510] SLOW spr round 2 (radius: 5)
+[00:43:54 -289695.566789] SLOW spr round 3 (radius: 5)
+[00:44:40 -289695.555437] SLOW spr round 4 (radius: 10)
+[00:45:32 -289693.540804] SLOW spr round 5 (radius: 15)
+[00:48:21 -289693.531892] SLOW spr round 6 (radius: 20)
+[00:52:23 -289693.531397] SLOW spr round 7 (radius: 25)
+[00:56:04] [worker #5] ML tree search #14, logLikelihood: -289747.949079
+[00:56:27 -289693.531341] Model parameter optimization (eps = 0.100000)
+
+[00:56:51] [worker #0] ML tree search #9, logLikelihood: -289689.830196
+
+[00:56:51 -333152.945293] Initial branch length optimization
+[00:56:53 -302881.339436] Model parameter optimization (eps = 10.000000)
+[00:57:08 -292368.687053] AUTODETECT spr round 1 (radius: 5)
+[00:57:21 -290683.186802] AUTODETECT spr round 2 (radius: 10)
+[00:58:07 -290277.505604] AUTODETECT spr round 3 (radius: 15)
+[00:58:37] [worker #4] ML tree search #13, logLikelihood: -289766.777905
+[00:58:41] [worker #3] ML tree search #12, logLikelihood: -289720.491493
+[00:59:50 -290219.373379] AUTODETECT spr round 4 (radius: 20)
+[00:59:55] [worker #7] ML tree search #16, logLikelihood: -289734.543506
+[01:00:06] [worker #6] ML tree search #15, logLikelihood: -289777.907559
+[01:01:41] [worker #2] ML tree search #11, logLikelihood: -289734.431341
+[01:02:24 -290217.847152] AUTODETECT spr round 5 (radius: 25)
+[01:05:18 -290217.750569] SPR radius for FAST iterations: 20 (autodetect)
+[01:05:18 -290217.750569] Model parameter optimization (eps = 3.000000)
+[01:05:24 -290212.420329] FAST spr round 1 (radius: 20)
+[01:07:11 -289888.974117] FAST spr round 2 (radius: 20)
+[01:08:23 -289851.907446] FAST spr round 3 (radius: 20)
+[01:08:50] [worker #1] ML tree search #10, logLikelihood: -289717.771340
+[01:09:14 -289849.272509] Model parameter optimization (eps = 1.000000)
+[01:09:46 -289816.592177] SLOW spr round 1 (radius: 5)
+[01:10:51 -289732.405403] SLOW spr round 2 (radius: 5)
+[01:11:43 -289724.288091] SLOW spr round 3 (radius: 10)
+[01:12:39 -289720.082373] SLOW spr round 4 (radius: 15)
+[01:15:28 -289720.067737] SLOW spr round 5 (radius: 20)
+[01:19:41 -289720.067258] SLOW spr round 6 (radius: 25)
+[01:23:54 -289720.067212] Model parameter optimization (eps = 0.100000)
+
+[01:24:03] [worker #0] ML tree search #17, logLikelihood: -289719.367212
+
+[01:26:49] [worker #3] ML tree search #20, logLikelihood: -289718.853049
+[01:30:52] [worker #2] ML tree search #19, logLikelihood: -289719.946115
+[01:35:14] [worker #1] ML tree search #18, logLikelihood: -289724.240193
+
+Optimized model parameters:
+
+   Partition 0: noname
+   Rate heterogeneity: GAMMA (4 cats, mean),  alpha: 0.757820 (ML),  weights&rates: (0.250000,0.086557) (0.250000,0.389581) (0.250000,0.944545) (0.250000,2.579317) 
+   P-inv (ML): 0.003600
+   Base frequencies (ML): 0.237025 0.201123 0.295614 0.266238 
+   Substitution rates (ML): 1.405745 3.281035 1.460415 0.951495 5.225959 1.000000 
 
 
-Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
+Final LogLikelihood: -289689.830196
 
+AIC score: 582201.660392 / AICc score: 603740.384716 / BIC score: 589787.030103
+Free parameters (model + branch lengths): 1411
 
+WARNING: Best ML tree contains 3 near-zero branches!
 
-This is RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018.
+Best ML tree with collapsed near-zero branches saved to: /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/CRuMs_gt07.raxml.bestTreeCollapsed
+Best ML tree saved to: /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/CRuMs_gt07.raxml.bestTree
+All ML trees saved to: /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/CRuMs_gt07.raxml.mlTrees
+Optimized model saved to: /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/CRuMs_gt07.raxml.bestModel
 
-With greatly appreciated code contributions by:
-Andre Aberer      (HITS)
-Simon Berger      (HITS)
-Alexey Kozlov     (HITS)
-Kassian Kobert    (HITS)
-David Dao         (KIT and HITS)
-Sarah Lutteropp   (KIT and HITS)
-Nick Pattengale   (Sandia)
-Wayne Pfeiffer    (SDSC)
-Akifumi S. Tanabe (NRIFS)
-Charlie Taylor    (UF)
+Execution log saved to: /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/CRuMs_gt07.raxml.log
 
+Analysis started: 23-Jan-2026 10:25:24 / finished: 23-Jan-2026 12:00:39
 
-Alignment has 1592 distinct alignment patterns
-
-Found 0 invariant alignment patterns that correspond to 0 columns 
-Proportion of gaps and completely undetermined characters in this alignment: 8.37%
-
-RAxML rapid hill-climbing mode
-
-Using 1 distinct models/data partitions with joint branch length optimization
-
-
-Executing 1 inferences on the original alignment using 1 distinct complete random trees
-
-All free model parameters will be estimated by RAxML
-GAMMA+P-Invar model of rate heterogeneity, ML estimate of alpha-parameter
-
-GAMMA+P-Invar Model parameters will be estimated up to an accuracy of 0.0010000000 Log Likelihood units
-
-Partition: 0
-Alignment Patterns: 1592
-Name: No Name Provided
-DataType: DNA
-Substitution Matrix: GTR
-
-
-
-
-RAxML was called as follows:
-
-raxmlHPC-PTHREADS-AVX2 -m GTRGAMMAI -s pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_CRuMs_EukClasses_gt07.aln -n pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_CRuMs_EukClasses_gt07.aln_p3 -T 8 -d -p 3 
-
-
-Partition: 0 with name: No Name Provided
-Base frequencies: 0.273 0.199 0.266 0.263 
-
-Inference[0]: Time 1223.854476 GAMMA+P-Invar-based likelihood -297724.123260, best rearrangement setting 25
-alpha[0]: 0.774471 invar[0]: 0.002491 rates[0] ac ag at cg ct gt: 1.211462 2.990090 1.198068 0.978983 5.051763 1.000000 
-
-
-Conducting final model optimizations on all 1 trees under GAMMA-based models ....
-
-Inference[0] final GAMMA-based Likelihood: -297723.583156 tree written to file /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/trees/CRuMs/RAxML_result.pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_CRuMs_EukClasses_gt07.aln_p3
-
-
-Starting final GAMMA-based thorough Optimization on tree 0 likelihood -297723.583156 .... 
-
-Final GAMMA-based Score of best tree -297723.583156
-
-Program execution info written to /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/trees/CRuMs/RAxML_info.pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_CRuMs_EukClasses_gt07.aln_p3
-Best-scoring ML tree written to: /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/trees/CRuMs/RAxML_bestTree.pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_CRuMs_EukClasses_gt07.aln_p3
-
-Overall execution time: 1350.301800 secs or 0.375084 hours or 0.015628 days
+Elapsed time: 5714.645 seconds
 
