@@ -8,6 +8,7 @@ out_dir = config['out_dir']
 ref_pckg = config['ref_pckg']
 query_fasta = config['query_fasta']
 ref_aln = config['ref_aln']
+trim_ref_aln = config['trim_ref_aln']
 supergroup_of_interest = config['supergroup_of_interest']
 pplacer_cutoff_length = config['pplacer_cutoff_length']
 busco_mode = config['busco_mode']
@@ -51,8 +52,8 @@ def choose_targets(wildcards=None):
         ssu_file = ssu_input or in_fasta
     else:
         # When running retrieval, check the checkpoint output
-        ck = checkpoints.parse_blast.get()
-        ssu_file = ck.output.pplacer_fasta
+        ck = checkpoints.parse_mafft_trim.get()
+        ssu_file = ck.output[0]
 
         # Wait briefly for the checkpoint output to be available
         wait_seconds = 20
@@ -162,7 +163,7 @@ if run_retrieval:
             '''
 
 if run_retrieval:
-    checkpoint parse_blast:
+    rule parse_blast:
         input:
             f'{out_dir}/blast/results.txt'
         output:
@@ -179,9 +180,59 @@ if run_retrieval:
             python3 {workflow.basedir}/../scripts/parse_blast.py {input} {in_fasta} {output.txt} {output.fasta} {output.pplacer_fasta} {params.pplacer_cutoff_length} &> {log}
             '''
 
+rule mafft_trim:
+    input:
+        f'{out_dir}/parsed_blast/parsed_sequences_for_pplacer.fasta'
+    output:
+        f'{out_dir}/mafft_trim/parsed_sequences_for_pplacer.aln'
+    params:
+        ref = trim_ref_aln
+    threads:
+        workflow.cores
+    log:
+        f'{out_dir}/logs/mafft_trim.log'
+    shell:
+        '''
+        mkdir -p {out_dir}/mafft_trim
+        # Check if input file is empty or has no sequences
+        if [ ! -s {input} ] || ! grep -q "^>" {input}; then
+            echo "No sequences to align - input file is empty" > {log}
+            touch {output}
+        else
+            mafft --add {input} --globalpair --keeplength --thread {threads} {params.ref} > {output} 2> {log}
+        fi
+        '''
+
+checkpoint parse_mafft_trim:
+    input:
+        f'{out_dir}/mafft_trim/parsed_sequences_for_pplacer.aln',
+        trim_ref_aln
+    output:
+        f'{out_dir}/mafft_trim/parsed_sequences_for_pplacer.fasta'
+    log:
+        f'{out_dir}/logs/parse_mafft_trim.log'
+    run:
+        from Bio import SeqIO
+        ref_records = set()
+        with open(input[1], 'r') as ref_file:
+            for record in SeqIO.parse(ref_file, 'fasta'):
+                ref_records.add(record.id)
+        
+        aln_rerecords = set()
+        with open(input[0], 'r') as f:
+            for record in SeqIO.parse(f, 'fasta'):
+                aln_rerecords.add(record.id)
+        
+        to_keep = aln_rerecords - ref_records
+        with open(output[0], 'w') as out_f:
+            for record in SeqIO.parse(input[0], 'fasta'):
+                if record.id in to_keep:
+                    SeqIO.write(record, out_f, 'fasta')
+
+
 rule mafft:
     input:
-        pplacer_fasta = ssu_fasta_for_placement if not run_retrieval else lambda wc: checkpoints.parse_blast.get().output.pplacer_fasta,
+        f'{out_dir}/mafft_trim/parsed_sequences_for_pplacer.fasta'
     output:
         f'{out_dir}/mafft/aligned.fasta'
     params:
@@ -193,7 +244,7 @@ rule mafft:
     shell:
         '''
         mkdir -p {out_dir}/mafft
-        mafft --add {input.pplacer_fasta} --keeplength --thread {threads} {params.ref} > {output} 2> {log}
+        mafft --add {input[0]} --keeplength --thread {threads} {params.ref} > {output} 2> {log}
         '''
 
 rule pplacer:
@@ -246,7 +297,7 @@ rule summarize:
     input:
         rppr = f'{out_dir}/rppr/results.db',
         guppy = f'{out_dir}/guppy/placement.tree',
-        parsed = ssu_input if not run_retrieval else lambda wc: checkpoints.parse_blast.get().output.fasta,
+        parsed = ssu_input if not run_retrieval else f'{out_dir}/parsed_blast/parsed_sequences.fasta',
         busco = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt' if run_retrieval else []
     output:
         taxonomy_summary = f'{out_dir}/summary/taxonomy_summary.csv',
