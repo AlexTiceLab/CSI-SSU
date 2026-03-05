@@ -1,6 +1,6 @@
 # CSI-SSU
 
-A command-line tool for screening SSU (Small Subunit ribosomal RNA) sequences in genomic and transcriptomic data. This tool helps identify and classify SSU sequences using phylogenetic placement in SSU reference packages built from PR2 via pplacer.
+A command-line tool for screening SSU (Small Subunit ribosomal RNA) sequences in genomic and transcriptomic data. This tool helps identify and classify SSU sequences using phylogenetic placement in SSU reference packages built from PR<sup>2</sup> via pplacer.
 
 ## Features
 
