@@ -1,24 +1,24 @@
 {
     "metadata": {
-        "create_date": "2025-12-12 09:59:01",
+        "create_date": "2026-02-10 14:23:58",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_modelnzcrxl9j.json",
+        "phylo_model": "phylo_modelo9rgyeq9.json",
         "aln_fasta": "Provora.aln",
         "seq_info": "Provora.seq_info",
         "taxonomy": "Provora.tax",
-        "tree": "tree5e74mq25.tre",
+        "tree": "treeq1glnxv1.tre",
         "tree_stats": "Provora.info"
     },
     "md5": {
-        "phylo_model": "b44b2a0b1bcfbff7592248cdf1f2243f",
-        "aln_fasta": "9a7184a315019d590fda27702df23216",
+        "phylo_model": "3f851af6628c127d88f64b5e4bc312ae",
+        "aln_fasta": "aae4c0f2051b5684e95b95ee85e18288",
         "seq_info": "89ffdb3976d43498bd92a064dd75d38b",
         "taxonomy": "0f4ef7da06eaf0fa9f00e1043c581bf1",
-        "tree": "045a94509954070ad8a9a1119d888a12",
-        "tree_stats": "0751293fd2b0d3012a22c64ba8c4decf"
+        "tree": "df529c3747ac510fcbbfe94261e9d678",
+        "tree_stats": "2366e5521f5f0f96655ec341791fbf14"
     },
     "log": [
         "Rerooted",
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-12 09:59:01",
+            "create_date": "2026-02-10 14:23:58",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_modelnzcrxl9j.json",
+            "phylo_model": "phylo_modelo9rgyeq9.json",
             "aln_fasta": "Provora.aln",
             "seq_info": "Provora.seq_info",
             "taxonomy": "Provora.tax",
@@ -40,12 +40,12 @@
             "tree_stats": "Provora.info"
         },
         "md5": {
-            "phylo_model": "b44b2a0b1bcfbff7592248cdf1f2243f",
-            "aln_fasta": "9a7184a315019d590fda27702df23216",
+            "phylo_model": "3f851af6628c127d88f64b5e4bc312ae",
+            "aln_fasta": "aae4c0f2051b5684e95b95ee85e18288",
             "seq_info": "89ffdb3976d43498bd92a064dd75d38b",
             "taxonomy": "0f4ef7da06eaf0fa9f00e1043c581bf1",
-            "tree": "d5f1cf3c1ca1841c74d42e07cdc90ed4",
-            "tree_stats": "0751293fd2b0d3012a22c64ba8c4decf"
+            "tree": "a40c0e0a6a3aa408161cb9c1f65bad76",
+            "tree_stats": "2366e5521f5f0f96655ec341791fbf14"
         },
         "rollback": null
     },

@@ -121,18 +121,28 @@ def generate_summary_csvs(db_path, taxonomy_summary_file, sequence_classificatio
                     order_cases.append(f"WHEN '{rank}' THEN {i}")
                 order_clause = f"CASE mc.want_rank {' '.join(order_cases)} ELSE 999 END"
                 
+                # Modified query: Select only the highest likelihood classification for each rank
+                # Uses subquery to get max likelihood per rank, then joins to get the corresponding taxon
                 cursor.execute(f'''
                 SELECT mc.want_rank, t.tax_name, mc.likelihood
                 FROM multiclass mc
                 JOIN placement_names pn ON mc.placement_id = pn.placement_id
                 JOIN taxa t ON mc.tax_id = t.tax_id
                 WHERE pn.name = ? AND mc.want_rank IN ({placeholders})
+                AND mc.likelihood = (
+                    SELECT MAX(mc2.likelihood)
+                    FROM multiclass mc2
+                    JOIN placement_names pn2 ON mc2.placement_id = pn2.placement_id
+                    WHERE pn2.name = pn.name AND mc2.want_rank = mc.want_rank
+                )
                 ORDER BY {order_clause}
                 ''', [seq_name] + ranks_of_interest)
                 
                 lineage = cursor.fetchall()
+                # Keep only the highest likelihood for each rank (first occurrence if tied)
                 for rank, taxon, likelihood in lineage:
-                    lineage_dict[rank] = (taxon, likelihood)
+                    if rank not in lineage_dict:
+                        lineage_dict[rank] = (taxon, likelihood)
                 
                 # Write row with all taxonomic levels
                 row = [seq_name]

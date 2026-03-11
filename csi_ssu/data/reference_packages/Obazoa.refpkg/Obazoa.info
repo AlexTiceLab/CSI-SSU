@@ -1,120 +1,344 @@
 
-You are using a proportion of Invariable sites estimate, although I don't
-like it. The likelihood epsilon "-f e" will be automatically lowered to 0.001
-to avoid unfavorable effects caused by simultaneous optimization of alpha and P-Invar
+RAxML-NG v. 1.2.2 released on 11.04.2024 by The Exelixis Lab.
+Developed by: Alexey M. Kozlov and Alexandros Stamatakis.
+Contributors: Diego Darriba, Tomas Flouri, Benoit Morel, Sarah Lutteropp, Ben Bettisworth, Julia Haag, Anastasis Togkousidis.
+Latest version: https://github.com/amkozlov/raxml-ng
+Questions/problems/suggestions? Please visit: https://groups.google.com/forum/#!forum/raxml
+
+System: Intel(R) Xeon(R) CPU E5-2695 v4 @ 2.10GHz, 36 cores, 188 GB RAM (allocated: 4 physical cores)
+
+RAxML-NG was called at 07-Feb-2026 20:58:45 as follows:
+
+raxml-ng --msa trimmed/Obazoa_gt07.aln --model GTR+G+I --prefix trees/Obazoa_gt07 --threads 8
+
+Analysis options:
+  run mode: ML tree search
+  start tree(s): random (10) + parsimony (10)
+  random seed: 1770519525
+  tip-inner: OFF
+  pattern compression: ON
+  per-rate scalers: OFF
+  site repeats: ON
+  logLH epsilon: general: 10.000000, brlen-triplet: 1000.000000
+  fast spr radius: AUTO
+  spr subtree cutoff: 1.000000
+  fast CLV updates: ON
+  branch lengths: proportional (ML estimate, algorithm: NR-FAST)
+  SIMD kernels: AVX2
+  parallelization: coarse-grained (auto), PTHREADS (8 threads), thread pinning: OFF
+
+[00:00:00] Reading alignment from file: trimmed/Obazoa_gt07.aln
+[00:00:00] Loaded alignment with 7837 taxa and 1394 sites
+
+WARNING: Sequences EU855533.1.813_U and EU855561.1.761_U are exactly identical!
+WARNING: Sequences AY640980.1.1487_G and AY640986.1.1429_G are exactly identical!
+WARNING: Sequences JN941723.1.3441_U and JN941706.1.3517_U are exactly identical!
+WARNING: Sequences JN367360.1.893_U and JN367347.1.909_U are exactly identical!
+WARNING: Sequences JN367350.1.906_U and JN367340.1.938_U are exactly identical!
+WARNING: Sequences HQ259059.1.2547_U and AB237657.1.3996_G are exactly identical!
+WARNING: Sequences GQ154631.1.2534_U and GQ154630.1.2907_U are exactly identical!
+WARNING: Sequences AJ496242.1.2149_U and KF857177.1.1806_U are exactly identical!
+WARNING: Sequences AF150481.1.1457_G and AF150484.1.1055_G are exactly identical!
+WARNING: Sequences AY251113.1.2239_G and AY251103.1.2093_G are exactly identical!
+WARNING: Sequences AM490840.1.1813_U and X75520.1.2336_G are exactly identical!
+WARNING: Duplicate sequences found: 11
+
+NOTE: Reduced alignment (with duplicates and gap-only sites/taxa removed) 
+NOTE: was saved to: /lustre/research/aletice/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/Obazoa_gt07.raxml.reduced.phy
+
+Alignment comprises 1 partitions and 1394 patterns
+
+Partition 0: noname
+Model: GTR+FO+I+G4m
+Alignment sites / patterns: 1394 / 1394
+Gaps: 11.77 %
+Invariant sites: 0.00 %
 
 
-IMPORTANT WARNING: Sequences EU855533.1.813_U and EU855561.1.761_U are exactly identical
+NOTE: Binary MSA file created: trees/Obazoa_gt07.raxml.rba
+
+Parallelization scheme autoconfig: 8 worker(s) x 1 thread(s)
 
 
-IMPORTANT WARNING: Sequences AY640980.1.1487_G and AY640986.1.1429_G are exactly identical
+NOTE: Per-rate scalers were automatically enabled to prevent numerical issues on taxa-rich alignments.
+NOTE: You can use --force switch to skip this check and fall back to per-site scalers.
+
+[00:00:00] Generating 10 random starting tree(s) with 7837 taxa
+[00:00:00] Generating 10 parsimony starting tree(s) with 7837 taxa
+Parallel parsimony with 8 threads
+Parallel reduction/worker buffer size: 1 KB  / 0 KB
+
+[00:03:05] Data distribution: max. partitions/sites/weight per thread: 1 / 1394 / 22304
+[00:03:05] Data distribution: max. searches per worker: 3
+
+Starting ML tree search with 20 distinct starting trees
+
+[00:03:06 -4036515.545023] Initial branch length optimization
+[00:04:18 -3432347.796148] Model parameter optimization (eps = 10.000000)
+[00:23:26 -3170644.902210] AUTODETECT spr round 1 (radius: 5)
+[00:28:13 -2844796.345401] AUTODETECT spr round 2 (radius: 10)
+[00:38:33 -2465027.356599] AUTODETECT spr round 3 (radius: 15)
+[00:56:37 -2113441.826017] AUTODETECT spr round 4 (radius: 20)
+[01:20:37 -1873135.931297] AUTODETECT spr round 5 (radius: 25)
+[01:58:15 -1726875.551209] SPR radius for FAST iterations: 25 (autodetect)
+[01:58:15 -1726875.551209] Model parameter optimization (eps = 3.000000)
+[02:10:06 -1715100.980544] FAST spr round 1 (radius: 25)
+[03:48:11 -1472813.728286] FAST spr round 2 (radius: 25)
+[05:09:22 -1433525.901907] FAST spr round 3 (radius: 25)
+[05:55:59 -1422413.431903] FAST spr round 4 (radius: 25)
+[06:24:25 -1414949.464982] FAST spr round 5 (radius: 25)
+[06:43:22 -1408142.500806] FAST spr round 6 (radius: 25)
+[06:56:25 -1406449.326517] FAST spr round 7 (radius: 25)
+[07:07:13 -1405683.762041] FAST spr round 8 (radius: 25)
+[07:14:32 -1405646.045574] FAST spr round 9 (radius: 25)
+[07:20:44 -1405633.305658] FAST spr round 10 (radius: 25)
+[07:25:45 -1405633.305143] Model parameter optimization (eps = 1.000000)
+[07:29:02 -1405340.625631] SLOW spr round 1 (radius: 5)
+[07:45:23 -1404888.058383] SLOW spr round 2 (radius: 5)
+[08:01:02 -1404806.086687] SLOW spr round 3 (radius: 5)
+[08:16:17 -1404797.690770] SLOW spr round 4 (radius: 10)
+[08:33:11 -1404722.551499] SLOW spr round 5 (radius: 5)
+[08:55:19 -1404697.702123] SLOW spr round 6 (radius: 5)
+[09:13:29 -1404692.712803] SLOW spr round 7 (radius: 10)
+[09:30:47 -1404691.204475] SLOW spr round 8 (radius: 15)
+[10:21:55 -1404664.922947] SLOW spr round 9 (radius: 5)
+[10:45:18 -1404641.756036] SLOW spr round 10 (radius: 5)
+[11:03:42 -1404633.619402] SLOW spr round 11 (radius: 10)
+[11:22:02 -1404625.364717] SLOW spr round 12 (radius: 15)
+[12:11:42 -1404618.141843] SLOW spr round 13 (radius: 20)
+[13:54:59 -1404600.255084] SLOW spr round 14 (radius: 5)
+[14:19:14 -1404593.548447] SLOW spr round 15 (radius: 10)
+[14:44:43 -1404584.890196] SLOW spr round 16 (radius: 15)
+[15:30:46 -1404583.713433] SLOW spr round 17 (radius: 20)
+[16:31:47] [worker #6] ML tree search #7, logLikelihood: -1414129.886701
+[17:14:47 -1404562.471595] SLOW spr round 18 (radius: 5)
+[17:31:31] [worker #7] ML tree search #8, logLikelihood: -1408312.866665
+[17:38:57 -1404556.293166] SLOW spr round 19 (radius: 10)
+[18:04:10 -1404549.870034] SLOW spr round 20 (radius: 15)
+[18:50:24 -1404542.607749] SLOW spr round 21 (radius: 20)
+[20:34:10 -1404541.538164] SLOW spr round 22 (radius: 25)
+[22:50:23] [worker #5] ML tree search #6, logLikelihood: -1411156.129555
+[23:30:19 -1404436.422198] SLOW spr round 23 (radius: 5)
+[23:55:15 -1404420.054161] SLOW spr round 24 (radius: 5)
+[24:14:45 -1404413.675210] SLOW spr round 25 (radius: 10)
+[24:33:19 -1404413.095876] SLOW spr round 26 (radius: 15)
+[25:21:48 -1404413.095514] SLOW spr round 27 (radius: 20)
+[26:06:31] [worker #1] ML tree search #2, logLikelihood: -1407965.373999
+[27:04:35 -1404411.852387] SLOW spr round 28 (radius: 25)
+[30:00:49 -1404410.122447] Model parameter optimization (eps = 0.100000)
+
+[30:02:38] [worker #0] ML tree search #1, logLikelihood: -1404407.318235
+
+[30:02:39 -4042145.527635] Initial branch length optimization
+[30:04:03 -3434166.901195] Model parameter optimization (eps = 10.000000)
+[30:14:33 -3172399.118407] AUTODETECT spr round 1 (radius: 5)
+[30:19:11 -2841390.287975] AUTODETECT spr round 2 (radius: 10)
+[30:29:34 -2462278.201365] AUTODETECT spr round 3 (radius: 15)
+[30:46:35 -2109760.624134] AUTODETECT spr round 4 (radius: 20)
+[31:08:06 -1876002.697037] AUTODETECT spr round 5 (radius: 25)
+[31:41:50 -1732380.990777] SPR radius for FAST iterations: 25 (autodetect)
+[31:41:50 -1732380.990777] Model parameter optimization (eps = 3.000000)
+[31:50:21 -1721784.307792] FAST spr round 1 (radius: 25)
+[32:46:26] [worker #4] ML tree search #5, logLikelihood: -1408188.700790
+[33:25:36 -1482159.011248] FAST spr round 2 (radius: 25)
+[33:26:31] [worker #2] ML tree search #3, logLikelihood: -1408377.821227
+[33:46:06] [worker #7] ML tree search #16, logLikelihood: -1399241.635214
+[34:44:11 -1446838.665531] FAST spr round 3 (radius: 25)
+[35:31:06 -1423990.036324] FAST spr round 4 (radius: 25)
+[36:00:51 -1422194.940164] FAST spr round 5 (radius: 25)
+[36:20:54 -1414860.494941] FAST spr round 6 (radius: 25)
+[36:34:47 -1411881.640892] FAST spr round 7 (radius: 25)
+[36:45:34 -1411044.341764] FAST spr round 8 (radius: 25)
+[36:54:29 -1410333.655606] FAST spr round 9 (radius: 25)
+[37:02:17 -1409774.561629] FAST spr round 10 (radius: 25)
+[37:07:48 -1409769.627411] Model parameter optimization (eps = 1.000000)
+[37:10:23 -1409467.634325] SLOW spr round 1 (radius: 5)
+[37:16:42] [worker #3] ML tree search #4, logLikelihood: -1411331.768002
+[37:26:27 -1409024.789595] SLOW spr round 2 (radius: 5)
+[37:41:51 -1408953.624723] SLOW spr round 3 (radius: 5)
+[37:56:35 -1408948.639506] SLOW spr round 4 (radius: 10)
+[38:13:47 -1408887.726808] SLOW spr round 5 (radius: 5)
+[38:35:44 -1408882.089306] SLOW spr round 6 (radius: 10)
+[38:57:43 -1408872.909618] SLOW spr round 7 (radius: 15)
+[39:46:11 -1408849.883836] SLOW spr round 8 (radius: 5)
+[40:10:04 -1408816.758820] SLOW spr round 9 (radius: 5)
+[40:25:45] [worker #6] ML tree search #15, logLikelihood: -1399149.672266
+[40:28:47 -1408806.891976] SLOW spr round 10 (radius: 10)
+[40:47:30 -1408803.134853] SLOW spr round 11 (radius: 15)
+[41:08:52] [worker #5] ML tree search #14, logLikelihood: -1399324.306643
+[41:37:46 -1408802.120654] SLOW spr round 12 (radius: 20)
+[43:25:55 -1408795.656944] SLOW spr round 13 (radius: 25)
+[46:42:44 -1408570.386597] SLOW spr round 14 (radius: 5)
+[47:07:47 -1408136.215881] SLOW spr round 15 (radius: 5)
+[47:27:12 -1407997.421354] SLOW spr round 16 (radius: 5)
+[47:43:01 -1407996.628622] SLOW spr round 17 (radius: 10)
+[47:59:55 -1407989.799362] SLOW spr round 18 (radius: 15)
+
+RAxML-NG v. 1.2.2 released on 11.04.2024 by The Exelixis Lab.
+Developed by: Alexey M. Kozlov and Alexandros Stamatakis.
+Contributors: Diego Darriba, Tomas Flouri, Benoit Morel, Sarah Lutteropp, Ben Bettisworth, Julia Haag, Anastasis Togkousidis.
+Latest version: https://github.com/amkozlov/raxml-ng
+Questions/problems/suggestions? Please visit: https://groups.google.com/forum/#!forum/raxml
+
+System: Intel(R) Xeon(R) CPU E5-2695 v4 @ 2.10GHz, 36 cores, 188 GB RAM (allocated: 4 physical cores)
+
+RAxML-NG was called at 10-Feb-2026 09:27:27 as follows:
+
+raxml-ng --msa trimmed/Obazoa_gt07.aln --model GTR+G+I --prefix trees/Obazoa_gt07 --threads 8
+
+Analysis options:
+  run mode: ML tree search
+  start tree(s): random (10) + parsimony (10)
+  random seed: 1770737247
+  tip-inner: OFF
+  pattern compression: ON
+  per-rate scalers: OFF
+  site repeats: ON
+  logLH epsilon: general: 10.000000, brlen-triplet: 1000.000000
+  fast spr radius: AUTO
+  spr subtree cutoff: 1.000000
+  fast CLV updates: ON
+  branch lengths: proportional (ML estimate, algorithm: NR-FAST)
+  SIMD kernels: AVX2
+  parallelization: coarse-grained (auto), PTHREADS (8 threads), thread pinning: OFF
+
+WARNING: The model you specified on the command line (GTR+G+I) will be ignored 
+         since the binary MSA file already contains a model definition.
+         If you want to change the model, please re-run RAxML-NG 
+         with the original PHYLIP/FASTA alignment and --redo option.
+
+[00:00:00] Loading binary alignment from file: trees/Obazoa_gt07.raxml.rba
+[00:00:00] Alignment comprises 7837 taxa, 1 partitions and 1394 patterns
+
+Partition 0: noname
+Model: GTR+FO+I+G4m
+Alignment sites / patterns: 1394 / 1394
+Gaps: 11.77 %
+Invariant sites: 0.00 %
 
 
-IMPORTANT WARNING: Sequences EF689825.1.2128_G and EF689827.1.2636_G are exactly identical
+Parallelization scheme autoconfig: 8 worker(s) x 1 thread(s)
 
 
-IMPORTANT WARNING: Sequences EF689825.1.2128_G and EF689875.1.4659_G are exactly identical
+NOTE: Per-rate scalers were automatically enabled to prevent numerical issues on taxa-rich alignments.
+NOTE: You can use --force switch to skip this check and fall back to per-site scalers.
+
+Parallel reduction/worker buffer size: 1 KB  / 0 KB
+
+[00:00:00] NOTE: Resuming execution from checkpoint (logLH: -1407989.80, ML trees: 11, bootstraps: 0)
+[00:00:00] Data distribution: max. partitions/sites/weight per thread: 1 / 1394 / 22304
+[00:00:00] Data distribution: max. searches per worker: 2
+
+Starting ML tree search with 20 distinct starting trees
+
+[00:00:01 -1407989.799362] SPR radius for FAST iterations: 25 (autodetect)
+[00:00:01 -1407989.799362] SLOW spr round 18 (radius: 15)
+[00:52:01 -1407195.390635] SLOW spr round 19 (radius: 5)
+[01:15:30 -1407134.096494] SLOW spr round 20 (radius: 5)
+[01:34:21 -1407116.677375] SLOW spr round 21 (radius: 5)
+[01:49:47 -1407116.244528] SLOW spr round 22 (radius: 10)
+[02:06:24 -1407114.223343] SLOW spr round 23 (radius: 15)
+[02:44:33] [worker #2] ML tree search #11, logLikelihood: -1399579.153498
+[02:58:04 -1407107.458495] SLOW spr round 24 (radius: 20)
+[04:43:55 -1407093.581456] SLOW spr round 25 (radius: 5)
+[05:08:18 -1407075.322586] SLOW spr round 26 (radius: 5)
+[05:26:47 -1407072.907373] SLOW spr round 27 (radius: 10)
+[05:45:14 -1407072.904798] SLOW spr round 28 (radius: 15)
+[06:33:33 -1407071.872150] SLOW spr round 29 (radius: 20)
+[08:17:28 -1407071.866855] SLOW spr round 30 (radius: 25)
+[10:43:07] [worker #4] ML tree search #13, logLikelihood: -1399414.914341
+[11:18:18 -1406939.019016] SLOW spr round 31 (radius: 5)
+[11:42:08 -1406902.986918] SLOW spr round 32 (radius: 5)
+[12:00:33 -1406896.328630] SLOW spr round 33 (radius: 10)
+[12:19:04 -1406896.327950] SLOW spr round 34 (radius: 15)
+[12:46:23] [worker #3] ML tree search #12, logLikelihood: -1399454.480374
+[13:06:58 -1406893.499650] SLOW spr round 35 (radius: 20)
+[14:18:39] [worker #1] ML tree search #10, logLikelihood: -1412154.302358
+[14:51:28 -1406830.353932] SLOW spr round 36 (radius: 5)
+[15:15:00 -1406823.342978] SLOW spr round 37 (radius: 10)
+[15:40:20 -1406821.614060] SLOW spr round 38 (radius: 15)
+[16:26:23 -1406812.264209] SLOW spr round 39 (radius: 20)
+[18:11:38 -1406812.239873] SLOW spr round 40 (radius: 25)
+[21:12:15 -1406807.368571] Model parameter optimization (eps = 0.100000)
+
+[21:14:12] [worker #0] ML tree search #9, logLikelihood: -1406804.963960
+
+[21:14:12 -1710914.862818] Initial branch length optimization
+[21:15:24 -1473481.576925] Model parameter optimization (eps = 10.000000)
+[21:19:03 -1419208.056401] AUTODETECT spr round 1 (radius: 5)
+[21:22:00 -1407410.453270] AUTODETECT spr round 2 (radius: 10)
+[21:30:44 -1405300.959452] AUTODETECT spr round 3 (radius: 15)
+[21:50:42 -1404325.774186] AUTODETECT spr round 4 (radius: 20)
+[22:29:51 -1403802.041220] AUTODETECT spr round 5 (radius: 25)
+[23:35:57 -1403559.091687] SPR radius for FAST iterations: 25 (autodetect)
+[23:35:58 -1403559.091687] Model parameter optimization (eps = 3.000000)
+[23:36:55 -1403550.331717] FAST spr round 1 (radius: 25)
+[24:44:47] [worker #2] ML tree search #19, logLikelihood: -1399346.319322
+[25:50:26 -1400693.870101] FAST spr round 2 (radius: 25)
+[27:18:38 -1400327.819554] FAST spr round 3 (radius: 25)
+[27:24:40] [worker #3] ML tree search #20, logLikelihood: -1399473.675659
+[28:11:10 -1400212.426284] FAST spr round 4 (radius: 25)
+[28:42:32 -1400193.700816] FAST spr round 5 (radius: 25)
+[29:02:26 -1400186.243255] Model parameter optimization (eps = 1.000000)
+[29:02:49 -1400185.583863] SLOW spr round 1 (radius: 5)
+[29:21:53 -1399770.723077] SLOW spr round 2 (radius: 5)
+[29:37:55 -1399658.395773] SLOW spr round 3 (radius: 5)
+[29:52:21 -1399635.078970] SLOW spr round 4 (radius: 5)
+[30:05:14 -1399625.964506] SLOW spr round 5 (radius: 10)
+[30:20:21 -1399545.985599] SLOW spr round 6 (radius: 5)
+[30:39:36 -1399504.814488] SLOW spr round 7 (radius: 5)
+[30:55:33 -1399497.217056] SLOW spr round 8 (radius: 10)
+[31:10:56 -1399494.912198] SLOW spr round 9 (radius: 15)
+[31:58:01 -1399460.839984] SLOW spr round 10 (radius: 5)
+[32:18:45 -1399447.892336] SLOW spr round 11 (radius: 5)
+[32:35:03 -1399442.896073] SLOW spr round 12 (radius: 10)
+[32:51:21 -1399434.229591] SLOW spr round 13 (radius: 15)
+[33:36:56 -1399432.637747] SLOW spr round 14 (radius: 20)
+[34:53:46] [worker #1] ML tree search #18, logLikelihood: -1400126.679475
+[35:14:39 -1399418.547798] SLOW spr round 15 (radius: 5)
+[35:36:37 -1399409.855205] SLOW spr round 16 (radius: 10)
+[35:59:35 -1399407.737480] SLOW spr round 17 (radius: 15)
+[36:41:17 -1399407.708112] SLOW spr round 18 (radius: 20)
+[38:17:33 -1399406.267674] SLOW spr round 19 (radius: 25)
+[41:02:39 -1399387.995255] SLOW spr round 20 (radius: 5)
+[41:24:30 -1399376.583565] SLOW spr round 21 (radius: 5)
+[41:40:55 -1399376.577508] SLOW spr round 22 (radius: 10)
+[41:57:33 -1399376.491235] SLOW spr round 23 (radius: 15)
+[42:40:58 -1399372.784328] SLOW spr round 24 (radius: 20)
+[44:15:35 -1399371.591522] SLOW spr round 25 (radius: 25)
+[46:59:25 -1399370.221911] Model parameter optimization (eps = 0.100000)
+
+[47:01:00] [worker #0] ML tree search #17, logLikelihood: -1399368.594512
 
 
-IMPORTANT WARNING: Sequences JN367360.1.893_U and JN367347.1.909_U are exactly identical
+Optimized model parameters:
+
+   Partition 0: noname
+   Rate heterogeneity: GAMMA (4 cats, mean),  alpha: 0.924693 (ML),  weights&rates: (0.250000,0.121694) (0.250000,0.452884) (0.250000,0.986308) (0.250000,2.439114) 
+   P-inv (ML): 0.000000
+   Base frequencies (ML): 0.251522 0.206443 0.281308 0.260727 
+   Substitution rates (ML): 1.255352 3.377942 1.444397 0.853164 5.121809 1.000000 
 
 
-IMPORTANT WARNING: Sequences JN367360.1.893_U and JN367340.1.938_U are exactly identical
+Final LogLikelihood: -1399149.672266
+
+AIC score: 2829661.344533 / AICc score: 494648545.344533 / BIC score: 2911828.727497
+Free parameters (model + branch lengths): 15681
+
+WARNING: Number of free parameters (K=15681) is larger than alignment size (n=1394).
+         This might lead to overfitting and compromise tree inference results!
 
 
-IMPORTANT WARNING: Sequences HQ259059.1.2547_U and AB237657.1.3996_G are exactly identical
+WARNING: Best ML tree contains 482 near-zero branches!
 
+Best ML tree with collapsed near-zero branches saved to: /lustre/research/aletice/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/Obazoa_gt07.raxml.bestTreeCollapsed
+Best ML tree saved to: /lustre/research/aletice/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/Obazoa_gt07.raxml.bestTree
+All ML trees saved to: /lustre/research/aletice/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/Obazoa_gt07.raxml.mlTrees
+Optimized model saved to: /lustre/research/aletice/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/Obazoa_gt07.raxml.bestModel
 
-IMPORTANT WARNING: Sequences GQ154631.1.2534_U and GQ154630.1.2907_U are exactly identical
+Execution log saved to: /lustre/research/aletice/jon37260/alfredo-p10k/18S-supergroup-trees/v2/trees/Obazoa_gt07.raxml.log
 
+Analysis started: 10-Feb-2026 09:27:27 / finished: 12-Feb-2026 08:28:29
 
-IMPORTANT WARNING: Sequences AF150481.1.1457_G and AF150484.1.1055_G are exactly identical
-
-
-IMPORTANT WARNING: Sequences AY251113.1.2239_G and AY251103.1.2093_G are exactly identical
-
-
-IMPORTANT WARNING: Sequences KF782403.1.842_U and KF782404.1.843_U are exactly identical
-
-
-IMPORTANT WARNING: Sequences AM490840.1.1813_U and X75520.1.2336_G are exactly identical
-
-IMPORTANT WARNING
-Found 12 sequences that are exactly identical to other sequences in the alignment.
-Normally they should be excluded from the analysis.
-
-An alignment file with sequence duplicates removed has already
-been printed to file pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln.reduced
-
-
-Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
-
-
-
-This is RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018.
-
-With greatly appreciated code contributions by:
-Andre Aberer      (HITS)
-Simon Berger      (HITS)
-Alexey Kozlov     (HITS)
-Kassian Kobert    (HITS)
-David Dao         (KIT and HITS)
-Sarah Lutteropp   (KIT and HITS)
-Nick Pattengale   (Sandia)
-Wayne Pfeiffer    (SDSC)
-Akifumi S. Tanabe (NRIFS)
-Charlie Taylor    (UF)
-
-
-Alignment has 1383 distinct alignment patterns
-
-Found 0 invariant alignment patterns that correspond to 0 columns 
-Proportion of gaps and completely undetermined characters in this alignment: 11.75%
-
-RAxML rapid hill-climbing mode
-
-Using 1 distinct models/data partitions with joint branch length optimization
-
-
-Executing 1 inferences on the original alignment using 1 distinct complete random trees
-
-All free model parameters will be estimated by RAxML
-GAMMA+P-Invar model of rate heterogeneity, ML estimate of alpha-parameter
-
-GAMMA+P-Invar Model parameters will be estimated up to an accuracy of 0.0010000000 Log Likelihood units
-
-Partition: 0
-Alignment Patterns: 1383
-Name: No Name Provided
-DataType: DNA
-Substitution Matrix: GTR
-
-
-
-
-RAxML was called as follows:
-
-raxmlHPC-PTHREADS-AVX2 -m GTRGAMMAI -s pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln -n pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln_p18 -T 16 -d -p 18 
-
-
-Partition: 0 with name: No Name Provided
-Base frequencies: 0.268 0.208 0.277 0.246 
-
-Inference[0]: Time 18779.811178 GAMMA+P-Invar-based likelihood -1382346.089916, best rearrangement setting 25
-alpha[0]: 0.927965 invar[0]: 0.000100 rates[0] ac ag at cg ct gt: 1.182525 3.078357 1.363078 0.815569 5.249325 1.000000 
-
-
-Conducting final model optimizations on all 1 trees under GAMMA-based models ....
-
-Inference[0] final GAMMA-based Likelihood: -1382343.667244 tree written to file /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/trees/Obazoa/RAxML_result.pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln_p18
-
-
-Starting final GAMMA-based thorough Optimization on tree 0 likelihood -1382343.667244 .... 
-
-Final GAMMA-based Score of best tree -1382341.244690
-
-Program execution info written to /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/trees/Obazoa/RAxML_info.pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln_p18
-Best-scoring ML tree written to: /lustre/work/jon37260/alfredo-p10k/18S-supergroup-trees/trees/Obazoa/RAxML_bestTree.pr2_version_5.1.0_SSU_taxo_long_18S_CDHIT95_keepLongest_Obazoa_EukClasses_gt07.aln_p18
-
-Overall execution time: 20529.282091 secs or 5.702578 hours or 0.237607 days
+Elapsed time: 169261.881 seconds (this run) / 342057.169 seconds (total with restarts)
 

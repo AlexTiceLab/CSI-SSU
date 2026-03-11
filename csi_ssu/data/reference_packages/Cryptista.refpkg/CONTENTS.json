@@ -1,24 +1,24 @@
 {
     "metadata": {
-        "create_date": "2025-12-12 09:57:34",
+        "create_date": "2026-02-10 14:25:01",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_modela45ea5vx.json",
+        "phylo_model": "phylo_modelpv53fqqw.json",
         "aln_fasta": "Cryptista.aln",
         "seq_info": "Cryptista.seq_info",
         "taxonomy": "Cryptista.tax",
-        "tree": "treeif_oje8r.tre",
+        "tree": "tree9hsx1o2m.tre",
         "tree_stats": "Cryptista.info"
     },
     "md5": {
-        "phylo_model": "4ee5e1e52cfc1f1952d7bba488ee4325",
-        "aln_fasta": "9134bdbc6737cb245b0237482608777e",
+        "phylo_model": "9171cf9762d872b580268e5692aa4ff9",
+        "aln_fasta": "68de77b566255108ce2971d5d7a8b042",
         "seq_info": "ce5d4667ac35bbe04a66961b2efc40ed",
         "taxonomy": "238ae3e15d5990ee0035b8f89116e8c5",
-        "tree": "badbfebf96b6028951e96862804b8722",
-        "tree_stats": "b6b0a3acb393290ca091fc3b39833801"
+        "tree": "35942218eba11216b13c85c7163f6e15",
+        "tree_stats": "42b356a9ff828f05013477a5b71ebe68"
     },
     "log": [
         "Rerooted",
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-12 09:57:34",
+            "create_date": "2026-02-10 14:25:01",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_modela45ea5vx.json",
+            "phylo_model": "phylo_modelpv53fqqw.json",
             "aln_fasta": "Cryptista.aln",
             "seq_info": "Cryptista.seq_info",
             "taxonomy": "Cryptista.tax",
@@ -40,12 +40,12 @@
             "tree_stats": "Cryptista.info"
         },
         "md5": {
-            "phylo_model": "4ee5e1e52cfc1f1952d7bba488ee4325",
-            "aln_fasta": "9134bdbc6737cb245b0237482608777e",
+            "phylo_model": "9171cf9762d872b580268e5692aa4ff9",
+            "aln_fasta": "68de77b566255108ce2971d5d7a8b042",
             "seq_info": "ce5d4667ac35bbe04a66961b2efc40ed",
             "taxonomy": "238ae3e15d5990ee0035b8f89116e8c5",
-            "tree": "c2621cfa03c62e509d286e78d6732628",
-            "tree_stats": "b6b0a3acb393290ca091fc3b39833801"
+            "tree": "f3fbe93078f49dd7e2cd9e20e439e12b",
+            "tree_stats": "42b356a9ff828f05013477a5b71ebe68"
         },
         "rollback": null
     },

@@ -1,24 +1,24 @@
 {
     "metadata": {
-        "create_date": "2025-12-12 09:56:10",
+        "create_date": "2026-02-10 14:24:22",
         "format_version": "1.1",
         "locus": "18S"
     },
     "files": {
-        "phylo_model": "phylo_modelvczlcmum.json",
+        "phylo_model": "phylo_modele5z3k35m.json",
         "aln_fasta": "Archaeplastida.aln",
         "seq_info": "Archaeplastida.seq_info",
         "taxonomy": "Archaeplastida.tax",
-        "tree": "treeotcng08e.tre",
+        "tree": "treejbhb1_w1.tre",
         "tree_stats": "Archaeplastida.info"
     },
     "md5": {
-        "phylo_model": "c4887b17801d7afe29edb76a6add36e8",
-        "aln_fasta": "eaee0fcef5b569f8dc710c2643fb902d",
+        "phylo_model": "5041c43cc1f6223fdc43ed47c5f2226c",
+        "aln_fasta": "3843bcd685576fc03175ce1432f62b2c",
         "seq_info": "1bdcd6e3a5f57c2aa9e593c35065233f",
         "taxonomy": "cea1eee8a8676ae8da2d59de163544d4",
-        "tree": "c959b076df301533d935359657ba8172",
-        "tree_stats": "cbf2d3c5fb911f8049821071633aeee9"
+        "tree": "5f5ea68ad4b590f1b40168a6da71d02d",
+        "tree_stats": "1a647fc8cfb17a71b5bfbf18a5bf3f75"
     },
     "log": [
         "Rerooted",
@@ -27,12 +27,12 @@
     ],
     "rollback": {
         "metadata": {
-            "create_date": "2025-12-12 09:56:10",
+            "create_date": "2026-02-10 14:24:22",
             "format_version": "1.1",
             "locus": "18S"
         },
         "files": {
-            "phylo_model": "phylo_modelvczlcmum.json",
+            "phylo_model": "phylo_modele5z3k35m.json",
             "aln_fasta": "Archaeplastida.aln",
             "seq_info": "Archaeplastida.seq_info",
             "taxonomy": "Archaeplastida.tax",
@@ -40,12 +40,12 @@
             "tree_stats": "Archaeplastida.info"
         },
         "md5": {
-            "phylo_model": "c4887b17801d7afe29edb76a6add36e8",
-            "aln_fasta": "eaee0fcef5b569f8dc710c2643fb902d",
+            "phylo_model": "5041c43cc1f6223fdc43ed47c5f2226c",
+            "aln_fasta": "3843bcd685576fc03175ce1432f62b2c",
             "seq_info": "1bdcd6e3a5f57c2aa9e593c35065233f",
             "taxonomy": "cea1eee8a8676ae8da2d59de163544d4",
-            "tree": "08ccb13ee42a6392c46a5a5f42c15261",
-            "tree_stats": "cbf2d3c5fb911f8049821071633aeee9"
+            "tree": "2bcc209869438786e44a9fbfdb137906",
+            "tree_stats": "1a647fc8cfb17a71b5bfbf18a5bf3f75"
         },
         "rollback": null
     },

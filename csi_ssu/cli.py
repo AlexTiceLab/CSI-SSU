@@ -78,7 +78,7 @@ def validate_args(args):
         return False
     
     # Validate required supergroup
-    valid_supergroups = ['Amoebozoa', 'Obazoa', 'Excavata', 'TSAR', 'Archaeplastida', 'Cryptista', 'Haptista', 'CRuMs', 'Provora']
+    valid_supergroups = ['Amoebozoa', 'Obazoa', 'Excavata', 'TSAR', 'Archaeplastida', 'Cryptista', 'Haptista', 'CRuMs', 'Provora', 'Microsporidia']
     if args.supergroup not in valid_supergroups:
         print(f"Error: Invalid supergroup '{args.supergroup}'. Valid options: {', '.join(valid_supergroups)}", file=sys.stderr)
         return False

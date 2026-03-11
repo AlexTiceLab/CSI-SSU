@@ -83,6 +83,7 @@ class SnakemakeRunner:
         ref_pckg = f'{current_dir}/data/reference_packages/{supergroup_of_interest}.refpkg'
         query_file = f'{current_dir}/data/queries/pr2_version_5.1.0_18S_divisions_query.fasta'
         ref_aln = f'{ref_pckg}/{supergroup_of_interest}.aln'
+        trim_ref_aln = f'{current_dir}/data/reference_alignments/ref_aln.fasta'
         busco_downloads = f'{current_dir}/data/busco_downloads'
 
         # Base config items
@@ -90,6 +91,7 @@ class SnakemakeRunner:
             f'out_dir={self.output_dir}',
             f'ref_pckg={ref_pckg}',
             f'ref_aln={ref_aln}',
+            f'trim_ref_aln={trim_ref_aln}',
             f'supergroup_of_interest={supergroup_of_interest}',
             f'pplacer_cutoff_length={self.pplacer_cutoff_length}',
             f'busco_mode={self.busco_mode}',

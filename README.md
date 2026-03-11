@@ -1,78 +1,67 @@
 # CSI-SSU
 
-A command-line tool for screening SSU (Small Subunit ribosomal RNA) sequences in genomic and transcriptomic data. This tool helps identify and classify SSU sequences using phylogenetic placement methods.
+A command-line tool for screening SSU (Small Subunit ribosomal RNA) sequences in genomic and transcriptomic data. This tool helps identify and classify SSU sequences using phylogenetic placement in SSU reference packages built from PR<sup>2</sup> via pplacer.
 
 ## Features
 
 - **Automated SSU screening** using BLAST, MAFFT, and pplacer
-- **Phylogenetic placement** for accurate taxonomic classification
-- **18S and 16S analysis** with dedicated reference packages
-- **Flexible output formats** including summary reports
+- **Phylogenetic placement** for contamination screening and approximate taxonomic classification
 - **Command-line interface** for easy integration into pipelines
 - **Configurable parameters** for different analysis needs
 
-## Installation
-
-### From PyPI (when published)
-```bash
-pip install csi-ssu
+## Installation (from Bioconda)
 ```
-
-### From Source
-```bash
-git clone https://github.com/AlexTiceLab/CSI-SSU.git
-cd CSI-SSU
-pip install -e .
-```
-
-### Dependencies
-
-The tool requires the following external programs to be installed and available in your PATH:
-
-- **BLAST+** (makeblastdb, blastn)
-- **MAFFT** (for sequence alignment)
-- **pplacer** (for phylogenetic placement)
-- **cd-hit** (for clustering sequences)
-- **Snakemake** (workflow management)
-
-You can install these using conda:
-```bash
-conda install -c bioconda blast mafft pplacer snakemake-minimal
+mamba install -c bioconda csi-ssu
 ```
 
 ## Quick Start
 
 ### Basic Usage
 ```bash
-# Run screening on FASTA file with taxonomy information
-csi-ssu input_sequences.fasta taxonomy_info.txt
+# Full pipeline (SSU retrieval + phylogenetic placement) for genome data
+csi-ssu <input_assembly> --supergroup <supergroup> --data-type genome
+
+# Full pipeline for transcriptome data
+csi-ssu <input_assembly> --supergroup <supergroup> --data-type transcriptome
 
 # Specify output directory and number of threads
-csi-ssu input_sequences.fasta taxonomy_info.txt -o results/ -t 8
+csi-ssu <input_assembly> --supergroup <supergroup> --data-type genome -o <out_dir> -t <threads>
 
-# Run only 18S analysis
-csi-ssu --18s-only input_sequences.fasta taxonomy_info.txt
+# SSU retrieval only (no phylogenetic placement)
+csi-ssu <input_assembly> --supergroup <supergroup> --data-type genome --mode retrieval
+
+# Phylogenetic placement only (using pre-extracted SSU sequences)
+csi-ssu <ssu_sequences.fasta> --supergroup <supergroup> --mode placement
 ```
 
 ## Command-Line Options
 
 ```
 positional arguments:
-  fasta                 Input FASTA file path
-  taxonomy              Input taxonomic classification file
+  fasta                      Input FASTA file path (genome/transcriptome or pre-extracted SSU sequences)
+
+required arguments:
+  --supergroup SUPERGROUP    Supergroup of interest (Amoebozoa, Excavata, TSAR, Archaeplastida, Cryptista, Haptista, CRuMs, Provora, Obazoa)
 
 optional arguments:
-  -h, --help           show this help message and exit
-  --version            show program's version number and exit
-  -o, --output-dir     Output directory (default: screening_tool_output)
-  -t, --threads        Number of threads to use (default: 1)
-  --dry-run            Show what would be run without executing
+  -h, --help                 show this help message and exit
+  --version                  show program's version number and exit
+  --data-type DATA_TYPE      {genome, transcriptome} for full or retrieval mode. {pre_collected_ssus} for placement-only mode.
+  --mode {full,retrieval,placement}
+                             Workflow mode: full (both parts), retrieval (SSU extraction + BUSCO bacteria_odb12), placement (phylogenetic placement only) (default: full)
+  -o, --output-dir           Output directory (default: screening_tool_output)
+  --pplacer-cutoff-length    Cutoff length for pplacer (default: 500)
+  -t, --threads              Number of threads to use (default: 1)
+  --dry-run                  Show what would be run without executing
 ```
 
 ## Input Files
 
 ### FASTA File
 Standard FASTA format containing sequences to be screened:
+- For full run or retrieval mode: genome assembly or transcriptome sequences
+- For placement mode: pre-extracted SSU sequences
+
 ```
 >sequence1
 ATCGATCGATCGATCG...
@@ -80,57 +69,73 @@ ATCGATCGATCGATCG...
 GCTAGCTAGCTAGCTA...
 ```
 
-### Taxonomy File (FIX THIS ONCE WE HAVE FINALIZED THE FORMAT)
-Tab-separated file with taxonomic information:
-```
-sequence_id    taxonomy_string
-sequence1      Eukaryota;Amoebozoa;...
-sequence2      Bacteria;Proteobacteria;...
-```
+## Workflow
+
+![CSI-SSU Workflow](assets/CSI-SSU_Workflow_Figure.png)
 
 ## Output
 
-The tool creates a structured output directory:
+The tool creates a structured output directory with contents depending on the workflow mode:
 
 ```
 screening_tool_output/
-├── logs/              # Log files for each step
-├── blast_db/          # BLAST database files
-├── blast/             # BLAST results
-├── parsed_blast/      # Parsed BLAST hits
-├── cd-hit/            # CD-HIT clustered sequences
-├── mafft/             # MAFFT alignments
-├── pplacer/           # pplacer phylogenetic placements
-├── guppy/             # Classification results
-└── summary/           # Final summary reports
+├── logs/              # Log files for each workflow step
+├── busco/             # BUSCO bacteria_odb12 contamination screening results (retrieval/full mode)
+├── blast_db/          # BLAST database files (retrieval/full mode)
+├── blast/             # BLAST search results (retrieval/full mode)
+├── parsed_blast/      # Parsed and filtered SSU sequences (retrieval/full mode)
+├── mafft/             # Multiple sequence alignments (placement/full mode)
+├── pplacer/           # Phylogenetic placement results (placement/full mode)
+├── rppr/              # Pplacer database files (placement/full mode)
+├── guppy/             # Phylogenetic tree with placements (placement/full mode)
+└── summary/           # Final summary reports and visualizations
 ```
 
 ### Main Output Files
 
-- **summary_report.txt**: Main results with taxonomic classifications
-- **placement.jplace**: Phylogenetic placement results (JSON format)
-- **guppy_results.txt**: Detailed classification information
+**In `summary/` directory:**
+- **taxonomy_summary.csv**: Taxonomic classification summary with counts per rank
+- **sequence_classifications.csv**: Individual sequence classifications with taxonomic assignments
+- **rank_counts.csv**: Detailed counts for each taxonomic rank
+- **placement_tree.pdf**: Visualization of phylogenetic tree with sequence placements
+- **busco_summary.txt**: Copy of BUSCO bacteria_odb12 contamination screening results (if retrieval was run)
+
+**In `parsed_blast/` directory (retrieval/full mode):**
+- **parsed_sequences.fasta**: All extracted SSU sequences
+- **parsed_sequences_for_pplacer.fasta**: Filtered SSU sequences meeting length cutoff
+- **parsed_results.txt**: Detailed BLAST hit information
+
+**In `pplacer/` directory (placement/full mode):**
+- **placement.jplace**: Phylogenetic placement results in JSON format
+
+**In `busco/` directory (retrieval/full mode):**
+- **short_summary.specific.bacteria_odb12.busco.txt**: BUSCO bacteria_odb12 contamination assessment
 
 ## Examples
 
-### Example 1: Basic Screening
+### Example 1: Full Pipeline on Genome Data
 ```bash
-csi-ssu genome_assembly.fasta taxonomy.txt
+csi-ssu genome_assembly.fasta --supergroup Amoebozoa --data-type genome -o results/ -t 8
 ```
 
-### Example 2: Multi-threaded Analysis
+### Example 2: Full Pipeline on Transcriptome Data
 ```bash
-csi-ssu transcriptome.fasta taxonomy.txt -o ssu_results -t 16 -v
+csi-ssu transcriptome.fasta --supergroup Excavata --data-type transcriptome -o ssu_results -t 16
 ```
 
-### Example 3: 18S-only Analysis
+### Example 3: SSU Retrieval Only
 ```bash
-csi-ssu eukaryotic_samples.fasta taxonomy.txt --18s-only -o euk_ssu
+csi-ssu genome.fasta --supergroup TSAR --data-type genome --mode retrieval -o retrieval_results/
 ```
 
-### Example 4: Dry Run (Check What Would Execute)
+### Example 4: Phylogenetic Placement Only
 ```bash
-csi-ssu input.fasta taxonomy.txt --dry-run -v
+csi-ssu ssu_sequences.fasta --supergroup Archaeplastida --mode placement -o placement_results/ -t 4
+```
+
+### Example 5: Dry Run (Check What Would Execute)
+```bash
+csi-ssu genome.fasta --supergroup Obazoa --data-type genome --dry-run
 ```
 
 
@@ -139,6 +144,4 @@ csi-ssu input.fasta taxonomy.txt --dry-run -v
 - **GitHub Issues**: [Report bugs or request features](https://github.com/AlexTiceLab/CSI-SSU/issues)
 - **Dry run**: Use `--dry-run` to see what commands would be executed
 
-## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
