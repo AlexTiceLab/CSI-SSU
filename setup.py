@@ -11,7 +11,7 @@ except FileNotFoundError:
 
 setup(
     name='csi-ssu',
-    version='1.0.0',
+    version='1.0.1',
     description='CSI CSI SSU screening tool for genomic and transcriptomic data',
     long_description=long_description,
     long_description_content_type='text/markdown',
