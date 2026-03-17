@@ -11,7 +11,7 @@ except FileNotFoundError:
 
 setup(
     name='csi-ssu',
-    version='1.0.2',
+    version='1.0.3',
     description='SSU screening tool for genomic and transcriptomic data',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -33,11 +33,9 @@ setup(
     # Include data files
     package_data={
         'csi_ssu': [
-            'workflows/*.smk',
-            'data/reference_packages/',
-            'data/queries/',
-            'data/busco_downloads/',
-            'data/reference_alignments/',
+            'workflows/**/*',
+            'data/**/*',
+            'scripts/**/*',
         ],
     },
     include_package_data=True,

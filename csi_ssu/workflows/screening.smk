@@ -38,13 +38,13 @@ def choose_targets(wildcards=None):
     if workflow_mode == 'retrieval':
         return [
             f'{out_dir}/parsed_blast/parsed_sequences_for_pplacer.fasta',
-            f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.json'
+            f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt'
         ]
     
     # Start building target list - always include BUSCO if running retrieval
     targets = []
     if run_retrieval:
-        targets.append(f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.json')
+        targets.append(f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt')
     
     # For placement or full mode, check SSU sequences
     if not run_retrieval:
@@ -124,7 +124,7 @@ def choose_targets(wildcards=None):
 # Create list of static targets that don't depend on checkpoint
 static_targets = []
 if run_retrieval:
-    static_targets.append(f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.json')
+    static_targets.append(f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt')
 
 rule all:
     input:
@@ -136,7 +136,7 @@ if run_retrieval:
         input:
             in_fasta
         output:
-            f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.json'
+            f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt'
         params:
             lineage=f'{busco_downloads}/lineages/bacteria_odb12',
             mode=busco_mode,
@@ -380,7 +380,7 @@ rule summarize:
         rppr = f'{out_dir}/rppr/results.db',
         guppy = f'{out_dir}/guppy/placement.tree',
         parsed = ssu_input if not run_retrieval else f'{out_dir}/parsed_blast/parsed_sequences.fasta',
-        busco = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.json' if run_retrieval else [],
+        busco = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt' if run_retrieval else [],
         status = f'{out_dir}/pplacer/placement_status.txt'
     output:
         taxonomy_summary = f'{out_dir}/summary/taxonomy_summary.csv',
@@ -392,7 +392,7 @@ rule summarize:
         f'{out_dir}/logs/summarize.log'
     params:
         supergroup = supergroup_of_interest,
-        busco_file = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.json'
+        busco_file = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt'
     run:
         # Check if we have valid placements
         with open(input.status, 'r') as f:
@@ -419,7 +419,7 @@ rule summarize:
 # Rule to create summary files when no hits were found
 rule summarize_no_hits:
     input:
-        busco = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.json' if run_retrieval else []
+        busco = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt' if run_retrieval else []
     output:
         marker = f'{out_dir}/summary/__NO_HITS__'
     log:
@@ -435,7 +435,7 @@ rule summarize_no_hits:
 rule summarize_no_valid_placements:
     input:
         placement_status = f'{out_dir}/pplacer/placement_status.txt',
-        busco = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.json' if run_retrieval else []
+        busco = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt' if run_retrieval else []
     output:
         marker = f'{out_dir}/summary/__NO_VALID_PLACEMENTS__'
     log:
