@@ -84,6 +84,7 @@ class SnakemakeRunner:
         query_file = f'{current_dir}/data/queries/pr2_version_5.1.0_18S_divisions_query.fasta'
         ref_aln = f'{ref_pckg}/{supergroup_of_interest}.aln'
         trim_ref_aln = f'{current_dir}/data/reference_alignments/ref_aln.fasta'
+        chimera_ref = f'{current_dir}/data/chimera_reference/pr2_version_5.1.0_SSU_taxo_long_95CDHIT.fasta'
         busco_downloads = f'{current_dir}/data/busco_downloads'
 
         # Base config items
@@ -98,6 +99,7 @@ class SnakemakeRunner:
             f'busco_downloads={busco_downloads}',
             f'in_fasta={self.fasta}',
             f'query_fasta={query_file}',
+            f'chimera_ref={chimera_ref}',
             f'workflow_mode={self.workflow_mode}',
         ]
         

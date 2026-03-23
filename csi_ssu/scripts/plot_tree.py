@@ -53,91 +53,47 @@ def get_sequence_lengths(fasta_file):
         print(f"Warning: Could not read sequence lengths from {fasta_file}: {e}")
         return sequence_lengths
 
-def root_tree_by_supergroup(tree, db_path, supergroup_of_interest):
+def get_chimera_info(chimera_file):
     """
-    Root the tree between the supergroup of interest and all other taxa.
+    Read chimera information from CSV file.
     
     Args:
-        tree: ete3 Tree object
-        db_path: Path to SQLite results database
-        supergroup_of_interest: Name of supergroup to root by
+        chimera_file: Path to CSV file with columns: sequence_id,is_chimera,score
     
     Returns:
-        Tree: Rooted tree object
+        dict: Dictionary mapping sequence names to their chimera status ('chimera', 'borderline', or 'non-chimera')
     """
-    if not db_path or not os.path.exists(db_path):
-        print("Warning: No database provided. Cannot root tree by supergroup.")
-        return tree
+    chimera_status = {}
+    
+    if not chimera_file or not os.path.exists(chimera_file):
+        print(f"Warning: Chimera file not found: {chimera_file}")
+        return chimera_status
     
     try:
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
+        import csv
+        with open(chimera_file, 'r') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                seq_id = row['sequence_id']
+                # The is_chimera column now contains: 'chimera', 'borderline', or 'non-chimera'
+                status = row['is_chimera'].lower()
+                
+                # Map the status directly
+                if status == 'chimera':
+                    chimera_status[seq_id] = 'chimera'
+                elif status == 'borderline':
+                    chimera_status[seq_id] = 'borderline'
+                else:
+                    chimera_status[seq_id] = 'non-chimera'
         
-        # Get all reference sequences and their taxonomic classifications
-        cursor.execute('''
-        SELECT DISTINCT t.tax_name, t.rank
-        FROM taxa t
-        WHERE t.rank = 'supergroup'
-        ''')
-        
-        supergroups = cursor.fetchall()
-        print(f"Available supergroups in database: {[sg[0] for sg in supergroups]}")
-        
-        # Get sequences that belong to the supergroup of interest
-        cursor.execute('''
-        SELECT DISTINCT pn.name
-        FROM placement_names pn
-        JOIN multiclass mc ON pn.placement_id = mc.placement_id
-        JOIN taxa t ON mc.tax_id = t.tax_id
-        WHERE t.tax_name = ? AND t.rank = 'supergroup'
-        ''', (supergroup_of_interest,))
-        
-        supergroup_sequences = {row[0] for row in cursor.fetchall()}
-        print(f"Found {len(supergroup_sequences)} sequences from {supergroup_of_interest}")
-        
-        conn.close()
-        
-        # Get all leaf names from tree
-        all_leaves = {leaf.name for leaf in tree.get_leaves() if leaf.name}
-        
-        # Find leaves NOT in the supergroup of interest
-        non_supergroup_leaves = all_leaves - supergroup_sequences
-        print(f"Found {len(non_supergroup_leaves)} sequences NOT from {supergroup_of_interest}")
-        
-        if len(supergroup_sequences) == 0:
-            print(f"Warning: No sequences found for supergroup '{supergroup_of_interest}'. Cannot root tree.")
-            return tree
-        
-        if len(non_supergroup_leaves) == 0:
-            print(f"Warning: All sequences belong to {supergroup_of_interest}. Cannot root tree.")
-            return tree
-        
-        # Find the most recent common ancestor (MRCA) of non-supergroup sequences
-        non_supergroup_nodes = []
-        for leaf in tree.get_leaves():
-            if leaf.name and leaf.name in non_supergroup_leaves:
-                non_supergroup_nodes.append(leaf)
-        
-        if len(non_supergroup_nodes) < 2:
-            print("Warning: Need at least 2 non-supergroup sequences to root tree.")
-            return tree
-        
-        # Get MRCA of non-supergroup sequences to use as outgroup
-        outgroup_mrca = tree.get_common_ancestor(non_supergroup_nodes)
-        
-        # Root the tree using this outgroup
-        tree.set_outgroup(outgroup_mrca)
-        
-        tree.ladderize(direction=0) 
-        
-        print(f"Successfully rooted tree with {supergroup_of_interest} as ingroup and {len(non_supergroup_leaves)} sequences as outgroup")
-        
-        return tree
+        num_chimeras = sum(1 for v in chimera_status.values() if v == 'chimera')
+        num_borderline = sum(1 for v in chimera_status.values() if v == 'borderline')
+        print(f"Read chimera information for {len(chimera_status)} sequences ({num_chimeras} chimeras, {num_borderline} borderline)")
+        return chimera_status
         
     except Exception as e:
-        print(f"Warning: Could not root tree by supergroup: {e}")
-        print("Continuing with unrooted tree.")
-        return tree
+        print(f"Warning: Could not read chimera information from {chimera_file}: {e}")
+        return chimera_status
 
 def get_taxonomic_hierarchy(db_path, reference_package_dir=None):
     """
@@ -496,7 +452,7 @@ def get_placed_sequences(db_path):
     
     return placed_sequences, supergroup_likelihoods, division_likelihoods, order_likelihoods, family_likelihoods
 
-def plot_tree_ete3(tree_file, output_file, db_path=None, supergroup_of_interest=None, reference_package_dir=None, fasta_file=None):
+def plot_tree_ete3(tree_file, output_file, db_path=None, supergroup_of_interest=None, reference_package_dir=None, fasta_file=None, chimera_file=None):
     """
     Plot phylogenetic tree using ete3 with placed sequences in bold.
     
@@ -507,6 +463,7 @@ def plot_tree_ete3(tree_file, output_file, db_path=None, supergroup_of_interest=
         supergroup_of_interest: Optional supergroup to use for rooting the tree
         reference_package_dir: Optional path to reference package directory
         fasta_file: Optional path to FASTA file containing sequence lengths for placed sequences
+        chimera_file: Optional path to CSV file containing chimera information
     """
     import os
     # Set environment variables for headless rendering
@@ -582,9 +539,14 @@ def plot_tree_ete3(tree_file, output_file, db_path=None, supergroup_of_interest=
                     pass
                 raise ImportError(f"ete3 cannot parse this tree format. Original error: {e}")
     
-    # Root the tree by supergroup if specified
-    if supergroup_of_interest:
-        tree = root_tree_by_supergroup(tree, db_path, supergroup_of_interest)
+    # Apply midpoint rooting
+    try:
+        midpoint = tree.get_midpoint_outgroup()
+        tree.set_outgroup(midpoint)
+        tree.ladderize(direction=0)
+        print("Tree rooted at midpoint")
+    except Exception as e:
+        print(f"Warning: Could not apply midpoint rooting: {e}")
     
     # Get placed sequences, taxonomic hierarchy, sequence lengths, and likelihoods
     placed_sequences = {}
@@ -598,6 +560,11 @@ def plot_tree_ete3(tree_file, output_file, db_path=None, supergroup_of_interest=
     # Read sequence lengths from FASTA file
     if fasta_file:
         sequence_lengths = get_sequence_lengths(fasta_file)
+    
+    # Read chimera information from CSV file
+    chimera_status = {}
+    if chimera_file:
+        chimera_status = get_chimera_info(chimera_file)
     
     if db_path and os.path.exists(db_path):
         placed_sequences, supergroup_likelihoods, division_likelihoods, order_likelihoods, family_likelihoods = get_placed_sequences(db_path)
@@ -694,7 +661,15 @@ def plot_tree_ete3(tree_file, output_file, db_path=None, supergroup_of_interest=
                     placed_no_support_style["shape"] = "circle"
                     node.set_style(placed_no_support_style)
                     # Add bold text face for placed sequences
-                    name_face = TextFace(display_name, fgcolor="black", fsize=9, bold=True)
+                    # Color based on chimera status: red=chimera, orange=borderline, black=non-chimera
+                    chimera_type = chimera_status.get(node.name, 'non-chimera')
+                    if chimera_type == 'chimera':
+                        text_color = "red"
+                    elif chimera_type == 'borderline':
+                        text_color = "orange"
+                    else:
+                        text_color = "black"
+                    name_face = TextFace(display_name, fgcolor=text_color, fsize=9, bold=True)
                     name_face.margin_left = 5
                     node.add_face(name_face, column=0, position="branch-right")
                     formatted_count += 1
@@ -722,14 +697,11 @@ def plot_tree_ete3(tree_file, output_file, db_path=None, supergroup_of_interest=
     print(f"Applied bold formatting to {formatted_count} placed sequences")
     
     # Set title
-    title_face = TextFace(f"{supergroup_of_interest} Reference Tree with pplacer Placed Sequences" if supergroup_of_interest else "Reference Tree with pplacer Placed Sequences", fsize=16, bold=True)
+    title_face = TextFace(f"Reference Tree with pplacer Placed Sequences (Midpoint Rooted)", fsize=16, bold=True)
     ts.title.add_face(title_face, column=0)
     
     # Add legend
-    if supergroup_of_interest:
-        legend_text = f"Tree is midpoint rooted\nBlack/Bold: Placed sequences ({len(placed_sequences)})\nBlack: Reference sequences ({num_taxa - len(placed_sequences)})"
-    else:
-        legend_text = f"Black/Bold: Placed sequences ({len(placed_sequences)})\nBlack: Reference sequences ({num_taxa - len(placed_sequences)})"
+    legend_text = f"Black/Bold: Placed sequences ({len(placed_sequences)})\nRed/Bold: Chimeric sequences\nOrange/Bold: Borderline chimeras\nBlack: Reference sequences ({num_taxa - len(placed_sequences)})"
     legend_face = TextFace(legend_text, fsize=10)
     ts.legend.add_face(legend_face, column=0)
     
@@ -742,7 +714,7 @@ def plot_tree_ete3(tree_file, output_file, db_path=None, supergroup_of_interest=
     print(f"Highlighted {len(placed_sequences)} placed sequences in bold")
 
 
-def plot_tree(tree_file, output_file, db_path=None, supergroup_of_interest=None, reference_package_dir=None, fasta_file=None):
+def plot_tree(tree_file, output_file, db_path=None, supergroup_of_interest=None, reference_package_dir=None, fasta_file=None, chimera_file=None):
     """
     Plot phylogenetic tree with placed sequences highlighted using ete3.
     
@@ -753,6 +725,7 @@ def plot_tree(tree_file, output_file, db_path=None, supergroup_of_interest=None,
         supergroup_of_interest: Optional supergroup name to filter
         reference_package_dir: Optional path to reference package directory
         fasta_file: Optional path to FASTA file containing sequences for length calculation
+        chimera_file: Optional path to CSV file containing chimera information
     """
     if not os.path.exists(tree_file):
         raise FileNotFoundError(f"Tree file not found: {tree_file}")
@@ -763,7 +736,7 @@ def plot_tree(tree_file, output_file, db_path=None, supergroup_of_interest=None,
     try:
         from ete3 import Tree, TreeStyle, NodeStyle, TextFace, AttrFace
         print("Using ete3 for tree visualization...")
-        plot_tree_ete3(tree_file, output_file, db_path, supergroup_of_interest, reference_package_dir, fasta_file)
+        plot_tree_ete3(tree_file, output_file, db_path, supergroup_of_interest, reference_package_dir, fasta_file, chimera_file)
         
     except ImportError:
         raise ImportError("ete3 is required for tree plotting. Please install with: mamba install ete3")
@@ -773,13 +746,14 @@ def plot_tree(tree_file, output_file, db_path=None, supergroup_of_interest=None,
 def main():
     """Main function for command line usage."""
     if len(sys.argv) < 3:
-        print("Usage: python plot_tree.py <tree_file> <output_file> [database_file] [supergroup_of_interest] [reference_package_dir] [fasta_file]")
+        print("Usage: python plot_tree.py <tree_file> <output_file> [database_file] [supergroup_of_interest] [reference_package_dir] [fasta_file] [chimera_file]")
         print("  tree_file: Path to input tree file (Newick format)")
         print("  output_file: Path to output image file (PDF, PNG, SVG)")
         print("  database_file: Optional path to SQLite database for identifying placed sequences")
         print("  supergroup_of_interest: Optional supergroup name to use for rooting the tree")
         print("  reference_package_dir: Optional path to reference package directory for reference sequence taxonomy")
         print("  fasta_file: Optional path to FASTA file containing sequences for length calculation (for placed sequences only)")
+        print("  chimera_file: Optional path to CSV file containing chimera information")
         sys.exit(1)
     
     tree_file = sys.argv[1]
@@ -788,6 +762,7 @@ def main():
     supergroup_of_interest = sys.argv[4] if len(sys.argv) > 4 else None
     reference_package_dir = sys.argv[5] if len(sys.argv) > 5 else None
     fasta_file = sys.argv[6] if len(sys.argv) > 6 else None
+    chimera_file = sys.argv[7] if len(sys.argv) > 7 else None
     
     # If no reference package directory provided, try to find it based on supergroup
     if not reference_package_dir and db_path:
@@ -808,10 +783,7 @@ def main():
                 reference_package_dir = fallback_refpkg
                 print(f"Supergroup {ref_supergroup} package not found, using fallback: {reference_package_dir}")
     
-    if supergroup_of_interest:
-        print(f"Rooting tree with {supergroup_of_interest} as ingroup")
-    
-    plot_tree(tree_file, output_file, db_path, supergroup_of_interest, reference_package_dir, fasta_file)
+    plot_tree(tree_file, output_file, db_path, supergroup_of_interest, reference_package_dir, fasta_file, chimera_file)
 
 if __name__ == "__main__":
     main()

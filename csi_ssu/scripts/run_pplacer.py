@@ -237,7 +237,7 @@ class RobustPplacer:
         self.logger.info(f"\nStep 3: Creating filtered alignment and rerunning pplacer...")
         
         # Create filtered alignment in same directory as original
-        filtered_aln = self.alignment_file.parent / f"{self.alignment_file.stem}_filtered.fasta"
+        filtered_aln = self.alignment_file.parent / f"{self.alignment_file.stem} .fasta"
         self._create_filtered_alignment(good_queries, filtered_aln)
         
         # Rerun pplacer on filtered alignment

@@ -5,6 +5,7 @@ A command-line tool for screening SSU (Small Subunit ribosomal RNA) sequences in
 ## Features
 
 - **Automated SSU screening** using BLAST, MAFFT, and pplacer
+- **Chimera detection** using VSEARCH to identify potentially chimeric SSU sequences
 - **Phylogenetic placement** for contamination screening and approximate taxonomic classification
 - **Command-line interface** for easy integration into pipelines
 - **Configurable parameters** for different analysis needs
@@ -84,6 +85,7 @@ screening_tool_output/
 ├── blast_db/          # BLAST database files (retrieval/full mode)
 ├── blast/             # BLAST search results (retrieval/full mode)
 ├── parsed_blast/      # Parsed and filtered SSU sequences (retrieval/full mode)
+├── vsearch/           # Chimera detection results (placement/full mode)
 ├── mafft/             # Multiple sequence alignments (placement/full mode)
 ├── pplacer/           # Phylogenetic placement results (placement/full mode)
 ├── rppr/              # Pplacer database files (placement/full mode)
@@ -104,6 +106,10 @@ screening_tool_output/
 - **parsed_sequences.fasta**: All extracted SSU sequences
 - **parsed_sequences_for_pplacer.fasta**: Filtered SSU sequences meeting length cutoff
 - **parsed_results.txt**: Detailed BLAST hit information
+
+**In `vsearch/` directory (placement/full mode):**
+- **chimera_summary.csv**: Chimera detection results for each SSU sequence (chimera/borderline/non-chimera)
+- **chimera_info.txt**: Detailed VSEARCH uchime output with alignment scores
 
 **In `pplacer/` directory (placement/full mode):**
 - **placement.jplace**: Phylogenetic placement results in JSON format

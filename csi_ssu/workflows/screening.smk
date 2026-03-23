@@ -13,6 +13,7 @@ supergroup_of_interest = config['supergroup_of_interest']
 pplacer_cutoff_length = config['pplacer_cutoff_length']
 busco_mode = config['busco_mode']
 busco_downloads = config['busco_downloads']
+chimera_ref = config['chimera_ref']
 skip_retrieval = config.get('skip_retrieval', False)
 ssu_input = config.get('ssu_input', None)
 workflow_mode = config.get('workflow_mode', 'full')
@@ -45,6 +46,9 @@ def choose_targets(wildcards=None):
     targets = []
     if run_retrieval:
         targets.append(f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt')
+    
+    # Always include vsearch outputs when running placement
+    targets.append(f'{out_dir}/vsearch/chimera_summary.csv')
     
     # For placement or full mode, check SSU sequences
     if not run_retrieval:
@@ -116,7 +120,7 @@ def choose_targets(wildcards=None):
             ])
             # Only include BUSCO summary if we ran retrieval
             if run_retrieval:
-                targets.append(f'{out_dir}/summary/busco_summary.json')
+                targets.append(f'{out_dir}/summary/busco_summary.txt')
     
     return targets
 
@@ -147,7 +151,18 @@ if run_retrieval:
             f'{out_dir}/logs/busco.log'
         shell:
             '''
+            set +e  # Don't exit on error
             busco -i {input} -o {params.out_dir} -l {params.lineage} -m {params.mode} --cpu {threads} -f --offline &> {log}
+            EXIT_CODE=$?
+            
+            # If BUSCO failed or output doesn't exist, create placeholder file
+            if [ $EXIT_CODE -ne 0 ] || [ ! -f {output} ]; then
+                echo "BUSCO analysis failed with exit code $EXIT_CODE" >> {log}
+                echo "# BUSCO analysis failed - creating placeholder file" > {output}
+                echo "# Check {log} for details" >> {output}
+            fi
+            
+            exit 0  # Always succeed so pipeline continues
             '''
 
 if run_retrieval:
@@ -205,9 +220,66 @@ if run_retrieval:
             python3 {workflow.basedir}/../scripts/parse_blast.py {input} {in_fasta} {output.txt} {output.fasta} {output.pplacer_fasta} {params.pplacer_cutoff_length} &> {log}
             '''
 
+def get_chimera_check_input(wildcards):
+    if run_retrieval:
+        return f'{out_dir}/parsed_blast/parsed_sequences_for_pplacer.fasta'
+    else:
+        return ssu_input or in_fasta
+
+rule vsearch_chimera_check:
+    input:
+        get_chimera_check_input
+    output:
+        uchimeout = f'{out_dir}/vsearch/chimera_info.txt',
+        summary = f'{out_dir}/vsearch/chimera_summary.csv'
+    params:
+        reference = chimera_ref
+    threads:
+        workflow.cores
+    log:
+        f'{out_dir}/logs/vsearch_chimera.log'
+    shell:
+        '''
+        mkdir -p {out_dir}/vsearch
+        # Check if input file is empty or has no sequences
+        if [ ! -s {input} ] || ! grep -q "^>" {input}; then
+            echo "No sequences to check - input file is empty" > {log}
+            touch {output.uchimeout}
+            echo "sequence_id,is_chimera,score" > {output.summary}
+        else
+            vsearch --uchime_ref {input} \
+                --db {params.reference} \
+                --uchimeout {output.uchimeout} \
+                --threads {threads} &> {log}
+            
+            # Parse uchimeout to create summary CSV
+            echo "sequence_id,is_chimera,score" > {output.summary}
+            awk 'BEGIN {{OFS=","}} {{
+                split($2, arr, ";");
+                seq_id = arr[1];
+                chimera_flag = $18;
+                if (chimera_flag == "Y") {{
+                    is_chimera = "chimera";
+                }} else if (chimera_flag == "?") {{
+                    is_chimera = "borderline";
+                }} else {{
+                    is_chimera = "non-chimera";
+                }}
+                score = $4;
+                print seq_id, is_chimera, score
+            }}' {output.uchimeout} >> {output.summary}
+        fi
+        '''
+
+def get_mafft_input(wildcards):
+    if run_retrieval:
+        return f'{out_dir}/parsed_blast/parsed_sequences_for_pplacer.fasta'
+    else:
+        return ssu_input or in_fasta
+
 rule mafft_trim:
     input:
-        f'{out_dir}/parsed_blast/parsed_sequences_for_pplacer.fasta'
+        get_mafft_input
     output:
         f'{out_dir}/mafft_trim/parsed_sequences_for_pplacer.aln'
     params:
@@ -381,18 +453,20 @@ rule summarize:
         guppy = f'{out_dir}/guppy/placement.tree',
         parsed = ssu_input if not run_retrieval else f'{out_dir}/parsed_blast/parsed_sequences.fasta',
         busco = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt' if run_retrieval else [],
-        status = f'{out_dir}/pplacer/placement_status.txt'
+        status = f'{out_dir}/pplacer/placement_status.txt',
+        chimera = f'{out_dir}/vsearch/chimera_summary.csv'
     output:
         taxonomy_summary = f'{out_dir}/summary/taxonomy_summary.csv',
         sequence_classifications = f'{out_dir}/summary/sequence_classifications.csv',
         rank_counts = f'{out_dir}/summary/rank_counts.csv',
         tree_pdf = f'{out_dir}/summary/placement_tree.pdf',
-        busco_summary = f'{out_dir}/summary/busco_summary.json'
+        busco_summary = f'{out_dir}/summary/busco_summary.txt'
     log:
         f'{out_dir}/logs/summarize.log'
     params:
         supergroup = supergroup_of_interest,
-        busco_file = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt'
+        busco_file = f'{out_dir}/busco/short_summary.specific.bacteria_odb12.busco.txt',
+        chimera_file = f'{out_dir}/vsearch/chimera_summary.csv'
     run:
         # Check if we have valid placements
         with open(input.status, 'r') as f:
@@ -406,13 +480,20 @@ rule summarize:
                        output.rank_counts, output.tree_pdf, output.busco_summary]:
                 shell(f"touch {out}")
         else:
-            shell('''
-            mkdir -p {out_dir}/summary
-            python3 {workflow.basedir}/../scripts/summarize_results.py {input.rppr} {output.taxonomy_summary} {output.sequence_classifications} {output.rank_counts} {input_basename} &> {log}
-            python3 {workflow.basedir}/../scripts/plot_tree.py {input.guppy} {output.tree_pdf} {input.rppr} {params.supergroup} "" {input.parsed} >> {log} 2>> {log}
+            shell(f'''
+            mkdir -p {{out_dir}}/summary
+            python3 {{workflow.basedir}}/../scripts/summarize_results.py {{input.rppr}} {{output.taxonomy_summary}} {{output.sequence_classifications}} {{output.rank_counts}} {{input_basename}} &> {{log}}
+            python3 {{workflow.basedir}}/../scripts/plot_tree.py {{input.guppy}} {{output.tree_pdf}} {{input.rppr}} {{params.supergroup}} "" {{input.parsed}} "{params.chimera_file}" >> {{log}} 2>> {{log}}
             ''')
             if run_retrieval:
-                shell('cp {params.busco_file} {output.busco_summary} >> {log} 2>> {log}')
+                # Check if BUSCO succeeded or failed
+                shell('''
+                if grep -q "BUSCO analysis failed" {params.busco_file}; then
+                    echo '{{"status": "failed", "message": "BUSCO analysis failed - see logs for details"}}' > {output.busco_summary}
+                else
+                    cp {params.busco_file} {output.busco_summary} >> {log} 2>> {log}
+                fi
+                ''')
             else:
                 shell('echo "BUSCO not run - skipped retrieval" > {output.busco_summary}')
 
